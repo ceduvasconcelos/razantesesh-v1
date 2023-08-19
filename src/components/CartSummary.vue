@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+
 defineProps({
   quantity: {
     type: Number,
@@ -9,6 +11,19 @@ defineProps({
     required: true
   }
 })
+
+const emit = defineEmits(['onConfirm'])
+
+const loadingConfirmButton = ref(false)
+
+const confirm = (): void => {
+  loadingConfirmButton.value = true
+
+  setTimeout(() => {
+    emit('onConfirm')
+    loadingConfirmButton.value = false
+  }, 500)
+}
 </script>
 
 <template>
@@ -30,12 +45,20 @@ defineProps({
 
       <div class="pa-4">
         <v-btn
+          :loading="loadingConfirmButton"
           variant="outlined"
           rounded="lg"
           :active="false"
           block
+          @click="confirm"
         >
           Continuar a compra
+
+          <template v-slot:loader>
+            <v-progress-circular indeterminate size="22" width="1"></v-progress-circular>
+
+            <span class="ms-2 font-weight-light">Redirecionando</span>
+          </template>
         </v-btn>
       </div>
     </template>

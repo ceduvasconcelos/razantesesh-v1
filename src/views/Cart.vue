@@ -10,7 +10,11 @@ const cartStore = useCartStore()
   <v-container>
     <v-row>
       <v-col cols="12" md="4" order-md="12">
-        <CartSummary :quantity="cartStore.quantity" :total="cartStore.total" />
+        <CartSummary
+          :quantity="cartStore.quantity"
+          :total="cartStore.total"
+          @onConfirm="cartStore.confirm"
+        />
       </v-col>
 
       <v-col

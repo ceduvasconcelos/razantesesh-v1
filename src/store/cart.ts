@@ -61,6 +61,20 @@ export const useCartStore = defineStore('cart', () => {
     cart.value.splice(productIndex, 1);
   }
 
+  function confirm(): void {
+    let text = 'Olá! gostaria de fazer um pedido. '
+    text += 'Os produtos escolhidos são:%0A%0A'
+
+    products.value?.forEach(product => {
+      text += `_${productQuantity(product.id)}x ${product.title} (R$ ${product.price},00) - R$ ${product.price * productQuantity(product.id)},00_%0A%0A`
+    });
+
+    text += 'Total do pedido: '
+    text += `R$ ${total.value},00`
+
+    window.open(`https://api.whatsapp.com/send?phone=85981887454&text=${text}`);
+  }
+
   return {
     products,
     total,
@@ -69,6 +83,7 @@ export const useCartStore = defineStore('cart', () => {
     productQuantity,
     add,
     remove,
-    updateQuantity
+    updateQuantity,
+    confirm
   }
 })
