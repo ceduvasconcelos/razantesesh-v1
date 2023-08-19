@@ -1,5 +1,6 @@
 // Composables
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAppStore } from '@/store/app'
 
 const routes = [
   {
@@ -14,6 +15,22 @@ const routes = [
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
       },
+      {
+        path: 'cart',
+        name: 'Cart',
+        component: () => import('@/views/Cart.vue'),
+      },
+      {
+        path: '/products',
+        children: [
+          {
+            path: ':slug',
+            name: 'Product',
+            component: () => import('@/views/Product.vue'),
+            props: true
+          }
+        ]
+      }
     ],
   },
 ]
@@ -21,6 +38,9 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+  scrollBehavior() {
+    return { top: 0 }
+  }
 })
 
 export default router

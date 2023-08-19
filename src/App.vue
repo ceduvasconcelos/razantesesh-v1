@@ -1,11 +1,13 @@
+<script setup lang="ts">
+import HeaderNavigation from './components/HeaderNavigation.vue'
+</script>
+
 <template>
   <v-app>
     <v-main>
-      <HelloWorld />
+      <HeaderNavigation />
+
+      <router-view />
     </v-main>
   </v-app>
 </template>
-
-<script setup lang="ts">
-  import HelloWorld from '@/components/HelloWorld.vue'
-</script>
