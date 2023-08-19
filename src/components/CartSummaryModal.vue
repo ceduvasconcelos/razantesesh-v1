@@ -45,14 +45,12 @@ const cartStore = useCartStore()
           <v-divider class="my-2"></v-divider>
 
           <div class="d-flex justify-start align-center">
-            <div>
+            <v-avatar>
               <v-img
-                :width="40"
-                cover
                 class="rounded-circle"
                 :src="product.banner"
               ></v-img>
-            </div>
+            </v-avatar>
 
             <div class="ms-4">
               <p class="text-left text-caption">{{ product.title }}</p>
