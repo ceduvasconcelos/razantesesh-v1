@@ -25,27 +25,26 @@ const cartStore = useCartStore()
   <v-container>
     <v-row justify="center">
       <v-col cols="12">
-        <div class="d-flex align-baseline mb-2">
-          <h1 class="text-h4 text-no-wrap font-weight-black me-2">Mais vendidos</h1>
+        <div class="d-flex align-baseline">
+          <h1 class="text-h5 text-no-wrap font-weight-black me-2">Mais vendidos</h1>
 
           <v-icon
-            color="red"
+            color="error"
             icon="mdi-fire-circle"
-            size="large"
-            class="me-4"
+            class="me-1"
           ></v-icon>
 
           <v-divider></v-divider>
         </div>
-
       </v-col>
 
       <v-col
         v-for="product in appStore.products"
         :key="product.id"
-        cols="6"
+        cols="12"
         sm="4"
         md="3"
+        class="pb-0"
       >
         <ProductCard
           :product="product"
@@ -55,10 +54,10 @@ const cartStore = useCartStore()
 
       <v-col cols="12" md="4">
         <v-btn
-          variant="outlined"
+          variant="plain"
           rounded="lg"
           text="Ver todos os produtos"
-          class="px-16"
+          class="mt-2"
           block
         ></v-btn>
       </v-col>

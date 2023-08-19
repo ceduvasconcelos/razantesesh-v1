@@ -8,7 +8,7 @@ const drawer = ref(false)
 </script>
 
 <template>
-  <v-app-bar :elevation="1">
+  <v-app-bar border flat density="comfortable">
     <template v-slot:prepend>
       <router-link :to="{ name: 'Home' }">
         <v-img
@@ -16,27 +16,23 @@ const drawer = ref(false)
           src="@/assets/logo.jpeg"
           width="95px"
           height="50px"
+          class="mt-1"
         ></v-img>
       </router-link>
-
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
     </template>
 
     <template v-slot:append>
-      <v-btn :to="{ name: 'Cart' }" :active="false" variant="text" rounded="lg">
+      <v-btn
+        :to="{ name: 'Cart' }"
+        :active="false"
+        variant="text"
+        rounded="lg"
+        class="mt-1"
+      >
         <v-icon size="large">mdi-cart-outline</v-icon>
 
         <span class="ms-2">{{ cartStore.quantity }} | R$ {{ cartStore.total || 0 }},00</span>
       </v-btn>
     </template>
   </v-app-bar>
-
-  <v-navigation-drawer
-    v-model="drawer"
-    temporary
-  >
-    <v-list nav>
-      <v-list-item variant="plain" title="Início" :to="{ name: 'Home' }"></v-list-item>
-    </v-list>
-  </v-navigation-drawer>
 </template>

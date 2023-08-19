@@ -61,18 +61,20 @@
                 class="d-md-none"
                 icon="mdi-instagram"
                 variant="text"
+                href="https://www.instagram.com/razantesesh"
+                target="_blank"
               ></v-btn>
 
-              <p class="text-caption text-center ms-4 d-none d-md-block">Copyright © {{ new Date().getFullYear() }} Razante 3D. Todos os direitos reservados.</p>
+              <p class="text-caption text-center ms-md-4">Copyright © {{ new Date().getFullYear() }} Razante 3D. Todos os direitos reservados.</p>
             </div>
 
             <v-btn
-              class="mx-4 d-none d-md-block"
+              class="d-none d-md-flex"
               icon="mdi-instagram"
               variant="text"
+              href="https://www.instagram.com/razantesesh"
+              target="_blank"
             ></v-btn>
-
-            <p class="text-caption text-center ms-4 d-md-none">Copyright © {{ new Date().getFullYear() }} Razante 3D. Todos os direitos reservados.</p>
           </div>
         </v-col>
       </v-row>

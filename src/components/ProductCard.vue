@@ -52,11 +52,9 @@ const buy = (id: number): void => {
         </template>
       </v-img>
 
-      <v-card-item>
-        <v-card-title class="text-wrap">Produto #{{ product.id }}</v-card-title>
+      <v-card-title class="text-wrap font-weight-regular">Produto #{{ product.id }}</v-card-title>
 
-        <v-card-subtitle>R$ {{ product.price }},00</v-card-subtitle>
-      </v-card-item>
+      <v-card-text>R$ {{ product.price }},00</v-card-text>
 
       <v-card-actions class="d-flex flex-column align-start">
 
