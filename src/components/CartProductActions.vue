@@ -16,7 +16,7 @@ const cartStore = useCartStore()
 
 const loadingRemoveButton = ref(false)
 
-const removeFromCart = (id: Number): void => {
+const removeFromCart = (id: number): void => {
   loadingRemoveButton.value = true
 
   setTimeout(() => {

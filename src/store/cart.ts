@@ -5,7 +5,7 @@ import Product from '@/interfaces/Product'
 import Cart from '@/interfaces/Cart'
 
 export const useCartStore = defineStore('cart', () => {
-  const cart: Ref<Cart[]> = ref(JSON.parse(localStorage.getItem('cart')))
+  const cart: Ref<Cart[]> = ref(JSON.parse(localStorage.getItem('cart') || '[]'))
 
   watch(cart.value, (cart) => {
       localStorage.setItem('cart', JSON.stringify(cart))

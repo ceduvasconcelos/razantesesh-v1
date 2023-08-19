@@ -16,7 +16,7 @@ const loadingBuyButton = ref(false)
 
 const showModal = ref(false)
 
-const buy = (id: Number): void => {
+const buy = (id: number): void => {
   loadingBuyButton.value = true
 
   setTimeout(() => {

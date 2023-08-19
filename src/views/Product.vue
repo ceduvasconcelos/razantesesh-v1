@@ -24,11 +24,11 @@ const loadingBuyButton = ref(false)
 
 const showModal = ref(false)
 
-const buy = () => {
+const buy = (id: number): void => {
   loadingBuyButton.value = true
 
   setTimeout(() => {
-    cartStore.add(product.id, quantity.value)
+    cartStore.add(id, quantity.value)
     loadingBuyButton.value = false
     showModal.value = true
   }, 500)
@@ -36,7 +36,7 @@ const buy = () => {
 </script>
 
 <template>
-  <v-container>
+  <v-container v-if="product">
     <v-row>
       <v-col cols="12">
         <v-breadcrumbs class="pa-0">
@@ -101,6 +101,7 @@ const buy = () => {
   </v-container>
 
   <CartSummaryModal
+    v-if="product"
     v-model="showModal"
     :product="product"
     :quantity="quantity"
