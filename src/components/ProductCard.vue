@@ -38,16 +38,24 @@ const buy = (id: number): void => {
     >
       <v-img
         :src="product.banner"
-        aspect-ratio="1"
+        :lazy-src="product.banner"
+        class="align-end"
+        gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
         cover
-      ></v-img>
+      >
+        <v-card-title class="text-white">Produto #{{ product.id }}</v-card-title>
+      </v-img>
 
-      <v-card-title class="text-wrap font-weight-regular">Produto #{{ product.id }}</v-card-title>
+      <v-card-text class="d-flex flex-column">
+        <div>
+          <span class="text-h6 text-md-h6">R$ {{ product.price }},00</span>
+          <span class="text-green font-weight-medium ms-2">58% OFF</span>
+        </div>
 
-      <v-card-text>R$ {{ product.price }},00</v-card-text>
+        <span class="text-decoration-line-through text-medium-emphasis">R$ {{ product.price + 15 }},00</span>
+      </v-card-text>
 
-      <v-card-actions class="d-flex flex-column align-start">
-
+      <v-card-actions>
         <v-btn
           :loading="loadingBuyButton"
           prepend-icon="mdi-cart-outline"
