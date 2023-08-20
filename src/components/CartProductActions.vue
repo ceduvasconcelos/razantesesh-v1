@@ -52,8 +52,9 @@ const removeFromCart = (id: number): void => {
         <v-btn
           :loading="loadingRemoveButton"
           variant="plain"
-          icon="mdi-delete-outline"
+          icon="mdi-close-circle"
           class="m-0"
+          size="small"
           @click="removeFromCart(product.id)"
         ></v-btn>
       </v-card-actions>

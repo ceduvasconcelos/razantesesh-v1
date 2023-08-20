@@ -37,7 +37,7 @@ const confirm = (): void => {
 
       <div class="pa-4">
         <div class="d-flex justify-space-between">
-          <span>Subtotal ({{ quantity }} {{ quantity > 1 ? 'produtos' : 'produto' }})</span>
+          <span>Total ({{ quantity }} {{ quantity > 1 ? 'produtos' : 'produto' }})</span>
 
           <span class="font-weight-medium">R$ {{ total }},00</span>
         </div>
