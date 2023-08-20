@@ -31,7 +31,7 @@ const buy = (id: number): void => {
   <v-hover v-slot="{ isHovering, props }">
     <v-card
       :to="{ name: 'Product', params: { slug: product.slug } }"
-      :elevation="isHovering ? 6 : 1"
+      :elevation="isHovering ? 4 : 1"
       rounded="lg"
       class="mx-auto mb-4"
       v-bind="props"
