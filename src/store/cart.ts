@@ -69,7 +69,7 @@ export const useCartStore = defineStore('cart', () => {
       text += `_${productQuantity(product.id)}x ${product.title} (R$ ${product.price},00) - R$ ${product.price * productQuantity(product.id)},00_%0A%0A`
     });
 
-    text += 'Total do pedido: '
+    text += `Total do pedido (${totalQuantity.value} ${totalQuantity.value > 1 ? 'itens' : 'item' }): `
     text += `R$ ${total.value},00`
 
     window.open(`https://api.whatsapp.com/send?phone=5585981887454&text=${text}`);

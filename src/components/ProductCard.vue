@@ -32,7 +32,6 @@ const buy = (id: number): void => {
     <v-card
       :to="{ name: 'Product', params: { slug: product.slug } }"
       :elevation="isHovering ? 6 : 1"
-      :class="{ 'on-hover': isHovering }"
       rounded="lg"
       class="mx-auto mb-4"
       v-bind="props"
@@ -41,16 +40,7 @@ const buy = (id: number): void => {
         :src="product.banner"
         aspect-ratio="1"
         cover
-      >
-        <template v-slot:placeholder>
-          <v-row
-            align="center"
-            justify="center"
-            class="fill-height ma-0"
-          >
-          </v-row>
-        </template>
-      </v-img>
+      ></v-img>
 
       <v-card-title class="text-wrap font-weight-regular">Produto #{{ product.id }}</v-card-title>
 
