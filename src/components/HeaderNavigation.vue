@@ -8,7 +8,7 @@ const drawer = ref(false)
 </script>
 
 <template>
-  <v-app-bar border flat density="comfortable">
+  <v-app-bar border flat density="compact">
     <template v-slot:prepend>
       <router-link :to="{ name: 'Home' }">
         <v-img
@@ -16,7 +16,6 @@ const drawer = ref(false)
           src="@/assets/logo.jpeg"
           width="95px"
           height="50px"
-          class="mt-1"
         ></v-img>
       </router-link>
     </template>
@@ -27,7 +26,6 @@ const drawer = ref(false)
         :active="false"
         variant="text"
         rounded="lg"
-        class="mt-1"
       >
         <v-icon size="large">mdi-cart-outline</v-icon>
 
