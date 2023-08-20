@@ -51,7 +51,7 @@ defineEmits(['update:modelValue'])
 
     <template #append>
       <div class="d-flex justify-space-between mb-2">
-        <span class="font-weight-medium">Total</span>
+        <span class="font-weight-medium">Subtotal</span>
         <span class="font-weight-medium">R$ {{ product.price * quantity }},00</span>
       </div>
 
