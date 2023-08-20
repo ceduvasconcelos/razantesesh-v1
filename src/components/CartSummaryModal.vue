@@ -67,7 +67,7 @@ const cartStore = useCartStore()
           </div>
         </v-col>
 
-        <v-col cols="12">
+        <v-col cols="12" align-self="end">
           <v-btn :to="{ name: 'Cart' }" variant="outlined" rounded="lg" block>
             Ver carrinho
           </v-btn>

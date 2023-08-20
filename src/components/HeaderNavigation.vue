@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useCartStore } from '@/store/cart';
+import { useCartStore } from '@/store/cart'
 
 const cartStore = useCartStore()
-
-const drawer = ref(false)
 </script>
 
 <template>
