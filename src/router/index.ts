@@ -19,12 +19,17 @@ const routes = [
     path: '/products',
     children: [
       {
-        path: '/:slug',
+        path: ':slug',
         name: 'Product',
         component: () => import('@/views/Product.vue'),
         props: true
       }
     ]
+  },
+  {
+    path: '/:pathMatch(.*)',
+    name: 'NotFound',
+    component: () => import('@/views/NotFound.vue')
   }
 ]
 
