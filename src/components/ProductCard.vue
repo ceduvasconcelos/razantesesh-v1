@@ -49,7 +49,7 @@ const buy = (id: number): void => {
       <v-card-text class="d-flex flex-column">
         <div>
           <span class="text-h6 text-md-h6">R$ {{ product.price }},00</span>
-          <span class="text-green font-weight-medium ms-2">58% OFF</span>
+          <span class="text-green font-weight-medium ms-2">{{ Math.floor((15 * 100) / product.price) }}% OFF</span>
         </div>
 
         <span class="text-decoration-line-through text-medium-emphasis">R$ {{ product.price + 15 }},00</span>
