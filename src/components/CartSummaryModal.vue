@@ -50,17 +50,19 @@ defineEmits(['update:modelValue'])
     </div>
 
     <template #append>
-      <div class="d-flex justify-space-between align-center mb-4">
+      <div class="d-flex justify-space-between mb-2">
         <span class="font-weight-medium">Total</span>
         <span class="font-weight-medium">R$ {{ product.price * quantity }},00</span>
       </div>
+
+      <v-divider></v-divider>
 
       <v-btn
         variant="text"
         rounded="lg"
         text="Continuar comprando"
         block
-        class="mb-2"
+        class="my-4"
         @click="$emit('update:modelValue', false)"
       ></v-btn>
 
