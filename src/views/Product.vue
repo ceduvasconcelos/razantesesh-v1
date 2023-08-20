@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useCartStore } from '@/store/cart'
+//import { useCartStore } from '@/store/cart'
 import { useAppStore } from '@/store/app'
-import CartSummaryModal from '@/components/CartSummaryModal.vue'
+//import CartSummaryModal from '@/components/CartSummaryModal.vue'
 import ProductCarousel from '@/components/ProductCarousel.vue'
 
 const props = defineProps({
@@ -14,7 +14,7 @@ const props = defineProps({
 
 const appStore = useAppStore()
 
-const cartStore = useCartStore()
+//const cartStore = useCartStore()
 
 const product = appStore.findBySlug(props.slug)
 
@@ -28,7 +28,7 @@ const buy = (id: number): void => {
   loadingBuyButton.value = true
 
   setTimeout(() => {
-    cartStore.add(id, quantity.value)
+    //cartStore.add(id, quantity.value)
     loadingBuyButton.value = false
     showModal.value = true
   }, 500)
@@ -100,10 +100,11 @@ const buy = (id: number): void => {
     </v-row>
   </v-container>
 
+<!--
   <CartSummaryModal
     v-if="product"
     v-model="showModal"
     :product="product"
     :quantity="quantity"
-  ></CartSummaryModal>
+  ></CartSummaryModal> -->
 </template>
