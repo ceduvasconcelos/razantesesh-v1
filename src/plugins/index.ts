@@ -9,6 +9,9 @@ import { loadFonts } from './webfontloader'
 import vuetify from './vuetify'
 import pinia from '../store'
 import router from '../router'
+import { inject } from '@vercel/analytics'
+
+inject()
 
 // Types
 import type { App } from 'vue'
