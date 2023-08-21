@@ -11,12 +11,12 @@ const routes = [
     component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
   },
   {
-    path: '/cart',
+    path: '/carrinho',
     name: 'Cart',
     component: () => import('@/views/Cart.vue'),
   },
   {
-    path: '/products',
+    path: '/produtos',
     children: [
       {
         path: ':slug',
