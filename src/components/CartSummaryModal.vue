@@ -25,7 +25,7 @@ defineEmits(['update:modelValue'])
     :model-value="modelValue"
     @update:modelValue="value => $emit('update:modelValue', value)"
     temporary
-    disable-resize-watcher
+    touchless
     location="right"
     class="pa-4"
   >
