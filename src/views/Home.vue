@@ -42,7 +42,7 @@ const addToCart = (id: number) => {
 
     <v-row justify="center" dense>
       <v-col
-        v-for="product in appStore.products"
+        v-for="product in appStore.bestSellers"
         :key="product.id"
         cols="6"
         sm="4"

@@ -121,7 +121,7 @@
         "slug": "product-example-6",
         "description": "description example.",
         "banner": "https://d3ugyf2ht6aenh.cloudfront.net/stores/002/052/975/products/mesa-de-trabajo-11-ef4219ad47bd1c66cc16897975433590-480-0.jpg",
-        "best_seller": false,
+        "best_seller": true,
         "images": [
             {
                 "path": "https://d3ugyf2ht6aenh.cloudfront.net/stores/002/052/975/products/mesa-de-trabajo-11-ef4219ad47bd1c66cc16897975433590-480-0.jpg"
