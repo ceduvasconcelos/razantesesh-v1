@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref, PropType } from 'vue'
+import { PropType } from 'vue'
 import Product from '@/interfaces/Product'
-import CartSummaryModal from '@/components/CartSummaryModal.vue'
+import BuyButton from './BuyButton.vue'
 
 defineProps({
   product: {
@@ -10,74 +10,41 @@ defineProps({
   }
 })
 
-const emit = defineEmits(['onBuying'])
-
-const loadingBuyButton = ref(false)
-
-const showModal = ref(false)
-
-const buy = (id: number): void => {
-  loadingBuyButton.value = true
-
-  setTimeout(() => {
-    emit('onBuying', id)
-    loadingBuyButton.value = false
-    showModal.value = true
-  }, 500)
-}
+defineEmits(['on-buying'])
 </script>
 
 <template>
-  <v-hover v-slot="{ isHovering, props }">
-    <v-card
-      :to="{ name: 'Product', params: { slug: product.slug } }"
-      :elevation="isHovering ? 4 : 1"
-      rounded="lg"
-      class="mx-auto mb-4"
-      v-bind="props"
-    >
-      <v-img
-        :src="product.banner"
-        :lazy-src="product.banner"
-        class="align-end"
-        gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-        cover
-      >
-        <v-card-title class="text-white">Produto #{{ product.id }}</v-card-title>
-      </v-img>
+  <v-card
+    :to="{ name: 'Product', params: { slug: product.slug } }"
+    rounded="lg"
+  >
+    <v-img
+      :src="product.banner"
+      :lazy-src="product.banner"
+      min-height="180"
+      aspect-ratio="4/3"
+      cover
+    ></v-img>
 
-      <v-card-text class="d-flex flex-column">
-        <div>
-          <span class="text-h6 text-md-h6">R$ {{ product.price }},00</span>
-          <span class="text-green font-weight-medium ms-2">{{ Math.floor((15 * 100) / product.price) }}% OFF</span>
+    <v-card-title class="text-subtitle-1 font-weight-regular text-md-h6">{{ product.title }}</v-card-title>
+
+    <v-card-text class="d-flex flex-column text-no-wrap mt-n2">
+      <span class="text-caption text-decoration-line-through" style="height: 1rem;">{{ product.id < 4 ? `R$ ${product.price + 15},00` : '' }}</span>
+
+      <div class="d-flex align-baseline">
+        <span class="text-subtitle-1">R$ {{ product.price }},00</span>
+
+
+        <div v-if="product.id < 4" class="text-green-darken-1 font-weight-medium ms-auto">
+          <v-icon icon="mdi-arrow-down" size="x-small"></v-icon>
+
+          {{ Math.floor((((product.price + 15) - product.price) / (product.price + 15)) * 100) }}%
         </div>
+      </div>
+    </v-card-text>
 
-        <span class="text-decoration-line-through text-medium-emphasis">R$ {{ product.price + 15 }},00</span>
-      </v-card-text>
-
-      <v-card-actions>
-        <v-btn
-          :loading="loadingBuyButton"
-          prepend-icon="mdi-cart-outline"
-          variant="outlined"
-          text="Comprar"
-          rounded="lg"
-          class="mb-1"
-          block
-          @click.prevent="buy(product.id)"
-        >
-          <template v-slot:loader>
-            <v-progress-circular indeterminate size="22" width="1"></v-progress-circular>
-
-            <span class="ms-2 font-weight-light">Incluindo</span>
-          </template>
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-hover>
-
-  <CartSummaryModal
-    v-model="showModal"
-    :product="product"
-  ></CartSummaryModal>
+    <v-card-actions class="mb-1 mt-n3">
+      <buy-button @on-buying="$emit('on-buying', product.id)"></buy-button>
+    </v-card-actions>
+  </v-card>
 </template>

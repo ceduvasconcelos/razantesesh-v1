@@ -1,10 +1,21 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useAppStore } from '@/store/app'
 import { useCartStore } from '@/store/cart'
 import ProductCard from '@/components/ProductCard.vue'
+import SectionTitle from '@/components/SectionTitle.vue'
+import PurchaseModal from '@/components/PurchaseModal.vue'
 
 const appStore = useAppStore()
 const cartStore = useCartStore()
+
+const showPurchaseModal = ref(false)
+
+const addToCart = (id: number) => {
+  cartStore.add(id)
+
+  showPurchaseModal.value = true
+}
 </script>
 
 <template>
@@ -23,44 +34,40 @@ const cartStore = useCartStore()
   </v-container>
 
   <v-container>
-    <v-row justify="center">
+    <v-row>
       <v-col cols="12">
-        <div class="d-flex align-baseline">
-          <h1 class="text-h5 text-no-wrap font-weight-black me-2">Mais vendidos</h1>
-
-          <v-icon
-            color="error"
-            icon="mdi-fire-circle"
-            class="me-1"
-          ></v-icon>
-
-          <v-divider></v-divider>
-        </div>
+        <section-title title="Mais vendidos" icon="mdi-fire-circle"></section-title>
       </v-col>
+    </v-row>
 
+    <v-row justify="center" dense>
       <v-col
         v-for="product in appStore.products"
         :key="product.id"
-        cols="12"
+        cols="6"
         sm="4"
         md="3"
-        class="pb-0"
+        class="mb-4"
       >
-        <ProductCard
+        <product-card
           :product="product"
-          @onBuying="cartStore.add"
-        />
+          @onBuying="addToCart"
+        ></product-card>
       </v-col>
+    </v-row>
 
-      <v-col cols="12" md="4">
+    <v-row justify="center" class="mt-4" dense>
+      <v-col cols="12" md="6">
         <v-btn
-          variant="plain"
+          :to="{ name: 'Products' }"
+          variant="text"
           rounded="lg"
           text="Ver todos os produtos"
-          class="mt-2"
           block
         ></v-btn>
       </v-col>
     </v-row>
   </v-container>
+
+  <purchase-modal v-model="showPurchaseModal"></purchase-modal>
 </template>

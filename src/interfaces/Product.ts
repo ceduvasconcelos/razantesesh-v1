@@ -6,6 +6,7 @@ export default interface Product {
   price: number,
   slug: string,
   description: string,
+  best_seller: boolean,
   banner: string,
   images: Array<Image>
 }

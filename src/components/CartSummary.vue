@@ -37,7 +37,7 @@ const confirm = (): void => {
 
       <div class="pa-4">
         <div class="d-flex justify-space-between">
-          <span>Total ({{ quantity }} {{ quantity > 1 ? 'produtos' : 'produto' }})</span>
+          <span class="font-weight-medium">Total ({{ quantity }} {{ quantity > 1 ? 'itens' : 'item' }})</span>
 
           <span class="font-weight-medium">R$ {{ total }},00</span>
         </div>
@@ -54,7 +54,7 @@ const confirm = (): void => {
         >
           Continuar a compra
 
-          <template v-slot:loader>
+          <template #loader>
             <v-progress-circular indeterminate size="22" width="1"></v-progress-circular>
 
             <span class="ms-2 font-weight-light">Redirecionando</span>

@@ -10,30 +10,23 @@ const cartStore = useCartStore()
   <v-container>
     <v-row>
       <v-col cols="12" md="4" order-md="12">
-        <CartSummary
+        <cart-summary
           :quantity="cartStore.quantity"
           :total="cartStore.total"
           @onConfirm="cartStore.confirm"
-        />
+        ></cart-summary>
       </v-col>
 
-      <v-col
-        v-if="cartStore.quantity"
-        cols="12"
-        md="8"
-      >
+      <v-col v-if="cartStore.quantity" cols="12" md="8">
         <v-card rounded="lg">
-          <template
-            v-for="(product, index) in cartStore.products"
-            :key="product.id"
-          >
+          <template v-for="(product, index) in cartStore.products" :key="product.id">
             <v-divider v-if="index"></v-divider>
 
-            <CartProductActions
+            <cart-product-actions
               :product="product"
               @changeQuantity="cartStore.updateQuantity"
               @removeFromCart="cartStore.remove"
-            />
+            ></cart-product-actions>
           </template>
         </v-card>
       </v-col>
@@ -45,7 +38,9 @@ const cartStore = useCartStore()
           class="d-flex flex-column align-center justify-center flex-wrap text-center mx-auto py-16 px-2"
         >
           <p class="font-weight-medium">Seu carrinho está vazio.</p>
+
           <p class="font-weight-light text-caption">Adicione produtos para continuar suas compras!</p>
+          
           <v-btn
             class="mt-4"
             variant="outlined"

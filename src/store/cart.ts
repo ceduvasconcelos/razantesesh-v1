@@ -27,10 +27,6 @@ export const useCartStore = defineStore('cart', () => {
   )
 
   const quantity: ComputedRef<number> = computed(
-    () => products.value?.length || 0
-  )
-
-  const totalQuantity: ComputedRef<number> = computed(
     () => products.value?.reduce((quantity, product) => quantity + productQuantity(product.id), 0) || 0
   )
 
@@ -69,7 +65,7 @@ export const useCartStore = defineStore('cart', () => {
       text += `_${productQuantity(product.id)}x ${product.title} (R$ ${product.price},00) - R$ ${product.price * productQuantity(product.id)},00_%0A%0A`
     });
 
-    text += `Total do pedido (${totalQuantity.value} ${totalQuantity.value > 1 ? 'itens' : 'item' }): `
+    text += `Total do pedido (${quantity.value} ${quantity.value > 1 ? 'itens' : 'item' }): `
     text += `R$ ${total.value},00`
 
     window.open(`https://api.whatsapp.com/send?phone=5585981887454&text=${text}`);
@@ -79,7 +75,6 @@ export const useCartStore = defineStore('cart', () => {
     products,
     total,
     quantity,
-    totalQuantity,
     productQuantity,
     add,
     remove,

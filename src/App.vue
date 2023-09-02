@@ -5,12 +5,12 @@ import FooterNavigation from '@/components/FooterNavigation.vue'
 
 <template>
   <v-app>
-    <HeaderNavigation />
+    <header-navigation></header-navigation>
 
     <v-main>
       <router-view />
     </v-main>
 
-    <FooterNavigation />
+    <footer-navigation></footer-navigation>
   </v-app>
 </template>

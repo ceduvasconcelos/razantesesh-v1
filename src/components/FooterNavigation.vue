@@ -3,9 +3,9 @@
 </script>
 
 <template>
-  <v-footer class="d-flex justify-space-between py-4 px-0 mt-4" border>
+  <v-footer class="d-flex justify-space-between mt-4" border>
     <v-container>
-      <v-row>
+      <v-row dense>
         <v-col cols="12">
           <div class="d-flex flex-column flex-md-row">
             <div class="d-flex justify-space-between justify-md-start">
@@ -24,6 +24,7 @@
                 rounded="lg"
                 size="small"
                 class="ms-md-6"
+                :to="{ name: 'Products' }"
                 :active="false"
               >
                 Produtos
@@ -65,7 +66,7 @@
                 target="_blank"
               ></v-btn>
 
-              <p class="text-caption text-center ms-md-4">Copyright © {{ new Date().getFullYear() }} Razante 3D. Todos os direitos reservados.</p>
+              <p class="text-caption text-center ms-md-4">© {{ new Date().getFullYear() }}</p>
             </div>
 
             <v-btn
@@ -81,3 +82,9 @@
     </v-container>
   </v-footer>
 </template>
+
+<style scoped>
+.v-footer {
+  max-height: min-content;
+}
+</style>

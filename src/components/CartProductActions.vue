@@ -28,24 +28,26 @@ const removeFromCart = (id: number): void => {
 </script>
 
 <template>
-  <div class="d-flex flex-no-wrap align-center justify-space-between">
+  <div class="d-flex flex-no-wrap justify-space-between align-center">
     <div>
-      <v-card-title class="text-wrap">
-        {{ product.title }}
-      </v-card-title>
+      <v-card-title class="text-subtitle-1 font-weight-regular text-md-h6 text-wrap">{{ product.title }}</v-card-title>
 
-      <v-card-subtitle>R$ {{ product.price }},00</v-card-subtitle>
+      <v-card-text class="text-subtitle-1">R$ {{ product.price }},00</v-card-text>
 
       <v-card-actions>
         <v-btn
           icon="mdi-minus"
+          density="comfortable"
+          class="me-2"
           :disabled="cartStore.productQuantity(product.id) < 2"
           @click="emit('changeQuantity', product.id, cartStore.productQuantity(product.id) - 1)"
         ></v-btn>
-        <span>{{ cartStore.productQuantity(product.id) }}</span>
+
+        {{ cartStore.productQuantity(product.id) }}
+
         <v-btn
           icon="mdi-plus"
-          class="m-0"
+          density="comfortable"
           @click="emit('changeQuantity', product.id, cartStore.productQuantity(product.id) + 1)"
         ></v-btn>
 
@@ -53,15 +55,15 @@ const removeFromCart = (id: number): void => {
           :loading="loadingRemoveButton"
           variant="plain"
           icon="mdi-close-circle"
-          class="m-0"
           size="small"
+          class="ms-4"
           @click="removeFromCart(product.id)"
         ></v-btn>
       </v-card-actions>
     </div>
 
     <v-avatar
-      class="ma-3"
+      class="ma-2"
       size="125"
       rounded="lg"
     >

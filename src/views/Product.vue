@@ -2,8 +2,17 @@
 import { ref } from 'vue'
 import { useCartStore } from '@/store/cart'
 import { useAppStore } from '@/store/app'
-import CartSummaryModal from '@/components/CartSummaryModal.vue'
 import ProductCarousel from '@/components/ProductCarousel.vue'
+import ProductsSlide from '@/components/ProductsSlide.vue'
+import BuyButton from '@/components/BuyButton.vue'
+import PurchaseModal from '@/components/PurchaseModal.vue'
+import { onBeforeRouteUpdate } from 'vue-router'
+
+onBeforeRouteUpdate(async (to, from) => {
+  if (to.params.slug != from.params.slug) {
+    product.value = appStore.findBySlug(to.params.slug.toString())
+  }
+})
 
 const props = defineProps({
   slug: {
@@ -13,25 +22,17 @@ const props = defineProps({
 })
 
 const appStore = useAppStore()
-
 const cartStore = useCartStore()
 
-const product = appStore.findBySlug(props.slug)
-
+const product = ref(appStore.findBySlug(props.slug))
 const quantity = ref(1)
 
-const loadingBuyButton = ref(false)
+const showPurchaseModal = ref(false)
 
-const showModal = ref(false)
+const addToCart = (id: number, quantity?: number) => {
+  cartStore.add(id, quantity)
 
-const buy = (id: number): void => {
-  loadingBuyButton.value = true
-
-  setTimeout(() => {
-    cartStore.add(id, quantity.value)
-    loadingBuyButton.value = false
-    showModal.value = true
-  }, 500)
+  showPurchaseModal.value = true
 }
 </script>
 
@@ -40,14 +41,16 @@ const buy = (id: number): void => {
     <v-row>
       <v-col cols="12">
         <v-breadcrumbs class="pa-0">
-          <v-breadcrumbs-item :to="{ name: 'Home' }">Produtos</v-breadcrumbs-item>
+          <v-breadcrumbs-item :to="{ name: 'Home' }">Início</v-breadcrumbs-item>
+
           <v-breadcrumbs-divider></v-breadcrumbs-divider>
+
           <v-breadcrumbs-item disabled>{{ product.title }}</v-breadcrumbs-item>
         </v-breadcrumbs>
       </v-col>
 
       <v-col cols="12" md="6">
-        <ProductCarousel :images="product.images" />
+        <product-carousel :images="product.images"></product-carousel>
       </v-col>
 
       <v-col cols="12" md="6">
@@ -64,29 +67,14 @@ const buy = (id: number): void => {
               :items="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
               variant="outlined"
               density="compact"
+              rounded="lg"
               :suffix="quantity > 1 ? 'unidades' : 'unidade'"
               hide-details
-              rounded="lg"
             ></v-select>
           </v-col>
 
           <v-col cols="12" md="8">
-            <v-btn
-              :loading="loadingBuyButton"
-              prepend-icon="mdi-cart-outline"
-              variant="outlined"
-              size="large"
-              rounded="lg"
-              block
-              @click="buy(product.id)"
-            >
-              Comprar
-              <template v-slot:loader>
-                <v-progress-circular indeterminate size="22" width="1"></v-progress-circular>
-
-                <span class="ms-2 font-weight-light">Incluindo</span>
-              </template>
-            </v-btn>
+            <buy-button size="large" @on-buying="addToCart(product.id, quantity)"></buy-button>
           </v-col>
         </v-row>
 
@@ -94,16 +82,14 @@ const buy = (id: number): void => {
 
         <div class="f-flex flex-column">
           <h5 class="text-subtitle-2 text-grey mb-2">DESCRIÇÃO</h5>
+
           <p class="">{{ product.description }}</p>
         </div>
       </v-col>
     </v-row>
   </v-container>
 
-  <CartSummaryModal
-    v-if="product"
-    v-model="showModal"
-    :product="product"
-    :quantity="quantity"
-  ></CartSummaryModal>
+  <products-slide @on-buying="addToCart"></products-slide>
+
+  <purchase-modal v-model="showPurchaseModal"></purchase-modal>
 </template>
