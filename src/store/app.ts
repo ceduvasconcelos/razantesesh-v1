@@ -36,9 +36,11 @@ export const useAppStore = defineStore('app', () => {
 
   function orderBy(type: string): Product[] {
     if (type === 'best_sellers')
-      return products.value.sort(
-        (a, b) => (a.best_seller === b.best_seller) ? 0 : a.best_seller ? -1 : 1
-      )
+      return products.value
+        .sort((a, b) => a.id - b.id)
+        .sort(
+          (a, b) => (a.best_seller === b.best_seller) ? 0 : a.best_seller ? -1 : 1
+        )
 
     if (type === 'lowest_price')
       return products.value.sort(
@@ -50,7 +52,9 @@ export const useAppStore = defineStore('app', () => {
         (a, b) => b.price - a.price
       )
 
-    return products.value
+    return products.value.sort(
+      (a, b) => a.id - b.id
+    )
   }
 
   return { products, bestSellers, find, findBySlug, whereIn, orderBy }
