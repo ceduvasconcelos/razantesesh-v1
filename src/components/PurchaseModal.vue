@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { VBottomSheet } from 'vuetify/lib/labs/components.mjs';
+import { VBottomSheet } from 'vuetify/lib/labs/components.mjs'
 
 defineProps({
   modelValue: {
@@ -36,7 +36,14 @@ defineEmits(['update:model-value'])
         </v-col>
 
         <v-col cols="12" md="6">
-          <v-btn :to="{ name: 'Cart' }" variant="outlined" rounded="lg" prepend-icon="mdi-cart-outline" block>
+          <v-btn
+            :to="{ name: 'Cart' }"
+            variant="outlined"
+            rounded="lg"
+            prepend-icon="mdi-cart-outline"
+            block
+            @click="$emit('update:model-value', false)"
+          >
             Ver carrinho
           </v-btn>
         </v-col>
