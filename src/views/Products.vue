@@ -21,14 +21,6 @@ const sortFilters = ref([
 ])
 
 const sort = ref(sortFilters.value[0])
-
-const showPurchaseModal = ref(false)
-
-const addToCart = (id: number) => {
-  cartStore.add(id)
-
-  showPurchaseModal.value = true
-}
 </script>
 
 <template>
@@ -76,7 +68,7 @@ const addToCart = (id: number) => {
       >
         <product-card
           :product="product"
-          @onBuying="addToCart"
+          @onBuying="cartStore.add"
         ></product-card>
       </v-col>
     </v-row>

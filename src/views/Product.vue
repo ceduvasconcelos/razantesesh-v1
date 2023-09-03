@@ -5,7 +5,6 @@ import { useAppStore } from '@/store/app'
 import ProductCarousel from '@/components/ProductCarousel.vue'
 import ProductsSlide from '@/components/ProductsSlide.vue'
 import BuyButton from '@/components/BuyButton.vue'
-import PurchaseModal from '@/components/PurchaseModal.vue'
 import { onBeforeRouteUpdate } from 'vue-router'
 
 onBeforeRouteUpdate(async (to, from) => {
@@ -82,6 +81,4 @@ const quantity = ref(1)
   </v-container>
 
   <products-slide @on-buying="cartStore.add"></products-slide>
-
-  <purchase-modal v-model="showPurchaseModal"></purchase-modal>
 </template>
