@@ -14,6 +14,8 @@ export const useCartStore = defineStore('cart', () => {
 
   const appStore = useAppStore()
 
+  const showPurchaseModal: Ref<boolean> = ref(false)
+
   const products: ComputedRef<Product[] | undefined> = computed(
     () => appStore.whereIn(cart.value.map(pivot => pivot.product_id))
   )
@@ -39,10 +41,15 @@ export const useCartStore = defineStore('cart', () => {
 
     if (productInCart) {
       updateQuantity(product_id, quantity + productInCart.quantity)
+
+      showPurchaseModal.value = true
+
       return
     }
 
     cart.value.push({ product_id, quantity })
+
+    showPurchaseModal.value = true
   }
 
   function updateQuantity(product_id: number, quantity: number): void {
@@ -75,6 +82,7 @@ export const useCartStore = defineStore('cart', () => {
     products,
     total,
     quantity,
+    showPurchaseModal,
     productQuantity,
     add,
     remove,

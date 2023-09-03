@@ -26,14 +26,6 @@ const cartStore = useCartStore()
 
 const product = ref(appStore.findBySlug(props.slug))
 const quantity = ref(1)
-
-const showPurchaseModal = ref(false)
-
-const addToCart = (id: number, quantity?: number) => {
-  cartStore.add(id, quantity)
-
-  showPurchaseModal.value = true
-}
 </script>
 
 <template>
@@ -74,7 +66,7 @@ const addToCart = (id: number, quantity?: number) => {
           </v-col>
 
           <v-col cols="12" md="8">
-            <buy-button size="large" @on-buying="addToCart(product.id, quantity)"></buy-button>
+            <buy-button size="large" @on-buying="cartStore.add(product.id, quantity)"></buy-button>
           </v-col>
         </v-row>
 
@@ -89,7 +81,7 @@ const addToCart = (id: number, quantity?: number) => {
     </v-row>
   </v-container>
 
-  <products-slide @on-buying="addToCart"></products-slide>
+  <products-slide @on-buying="cartStore.add"></products-slide>
 
   <purchase-modal v-model="showPurchaseModal"></purchase-modal>
 </template>
