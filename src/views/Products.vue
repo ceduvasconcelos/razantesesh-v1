@@ -5,6 +5,7 @@ import { useAppStore } from '@/store/app'
 import { useCartStore } from '@/store/cart'
 import ProductCard from '@/components/ProductCard.vue'
 import SectionTitle from '@/components/SectionTitle.vue'
+import PurchaseModal from '@/components/PurchaseModal.vue'
 
 const appStore = useAppStore()
 const cartStore = useCartStore()
@@ -21,6 +22,14 @@ const sort = ref(sortFilters.value[0])
 onBeforeRouteLeave(() => {
   appStore.reset()
 })
+
+const showPurchaseModal = ref(false)
+
+const addToCart = (id: number) => {
+  cartStore.add(id)
+
+  showPurchaseModal.value = true
+}
 </script>
 
 <template>
@@ -68,9 +77,11 @@ onBeforeRouteLeave(() => {
       >
         <product-card
           :product="product"
-          @onBuying="cartStore.add"
+          @onBuying="addToCart"
         ></product-card>
       </v-col>
     </v-row>
   </v-container>
+
+  <purchase-modal v-model="showPurchaseModal"></purchase-modal>
 </template>
