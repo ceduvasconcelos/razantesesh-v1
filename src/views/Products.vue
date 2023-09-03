@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, Ref, watch } from 'vue'
+import { ref } from 'vue'
+import { onBeforeRouteLeave } from 'vue-router'
 import { useAppStore } from '@/store/app'
 import { useCartStore } from '@/store/cart'
 import ProductCard from '@/components/ProductCard.vue'
@@ -7,8 +8,6 @@ import SectionTitle from '@/components/SectionTitle.vue'
 
 const appStore = useAppStore()
 const cartStore = useCartStore()
-
-const products = ref(appStore.products)
 
 const sortFilters = ref([
   { label: 'Mais recentes' },
@@ -19,13 +18,9 @@ const sortFilters = ref([
 
 const sort = ref(sortFilters.value[0])
 
-watch(
-  () => sort.value,
-  (value) => {
-    // @ts-ignore
-    products.value = appStore.orderBy(value)
-  }
-)
+onBeforeRouteLeave(() => {
+  appStore.reset()
+})
 </script>
 
 <template>
@@ -57,6 +52,7 @@ watch(
           hide-details
           flat
           class="mt-n2 mb-4"
+          @update:modelValue="appStore.orderBy"
         ></v-select>
       </v-col>
     </v-row>

@@ -34,28 +34,28 @@ export const useAppStore = defineStore('app', () => {
     return products.value.filter(product => products_id.includes(product.id))
   }
 
-  function orderBy(type: string): Product[] {
+  function orderBy(type: string): void {
+    products.value.sort((a, b) => a.id - b.id)
+
     if (type === 'best_sellers')
-      return products.value
-        .sort((a, b) => a.id - b.id)
-        .sort(
-          (a, b) => (a.best_seller === b.best_seller) ? 0 : a.best_seller ? -1 : 1
-        )
+      products.value.sort(
+        (a, b) => (a.best_seller === b.best_seller) ? 0 : a.best_seller ? -1 : 1
+      )
 
     if (type === 'lowest_price')
-      return products.value.sort(
+      products.value.sort(
         (a, b) => a.price - b.price
       )
 
     if (type === 'biggest_price')
-      return products.value.sort(
+      products.value.sort(
         (a, b) => b.price - a.price
       )
-
-    return products.value.sort(
-      (a, b) => a.id - b.id
-    )
   }
 
-  return { products, bestSellers, find, findBySlug, whereIn, orderBy }
+  function reset(): void {
+    products.value = [...productsJson]
+  }
+
+  return { products, bestSellers, find, findBySlug, whereIn, orderBy, reset }
 })
