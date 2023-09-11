@@ -30,8 +30,8 @@ const scroll = (direction: '+1' | '-1') => {
   splideComponent.value.go(direction)
 }
 
-const activePrevButton: Ref<Boolean> = ref(true)
-const activeNextButton: Ref<Boolean> = ref(true)
+const activePrevButton: Ref<boolean> = ref(true)
+const activeNextButton: Ref<boolean> = ref(true)
 
 const onArrowsUpdated = (_: any, prev: HTMLButtonElement, next: HTMLButtonElement) => {
   activePrevButton.value = prev.hasAttribute('disabled')
