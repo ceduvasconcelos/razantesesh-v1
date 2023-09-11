@@ -15,7 +15,6 @@ const splideComponent = ref()
 const splideOptions: Options = ref({
   perPage: 5,
   pagination: false,
-  arrows: false,
   gap: 8,
   breakpoints: {
     960: {
@@ -30,6 +29,15 @@ const splideOptions: Options = ref({
 const scroll = (direction: '+1' | '-1') => {
   splideComponent.value.go(direction)
 }
+
+const activePrevButton = ref(true)
+const activeNextButton = ref(true)
+
+const onArrowsUpdated = (_: any, prev: HTMLButtonElement, next: HTMLButtonElement) => {
+  activePrevButton.value = prev.hasAttribute('disabled')
+
+  activeNextButton.value = next.hasAttribute('disabled')
+}
 </script>
 
 <template>
@@ -43,6 +51,7 @@ const scroll = (direction: '+1' | '-1') => {
               variant="plain"
               class="mx-2"
               density="comfortable"
+              :disabled="activePrevButton"
               @click="scroll('-1')"
             ></v-btn>
 
@@ -50,6 +59,7 @@ const scroll = (direction: '+1' | '-1') => {
               icon="mdi-chevron-right"
               variant="plain"
               density="comfortable"
+              :disabled="activeNextButton"
               @click="scroll('+1')"
             ></v-btn>
           </template>
@@ -57,7 +67,7 @@ const scroll = (direction: '+1' | '-1') => {
       </v-col>
 
       <v-col cols="12">
-        <splide :options="splideOptions" ref="splideComponent">
+        <splide :options="splideOptions" ref="splideComponent" @splide:arrows:updated="onArrowsUpdated">
           <splide-slide v-for="product in appStore.products" :key="product.id">
             <product-card :product="product" @on-buying="product => $emit('onBuying', product)"></product-card>
           </splide-slide>
@@ -70,5 +80,9 @@ const scroll = (direction: '+1' | '-1') => {
 <style scoped>
 :deep(.splide__track) {
   padding: 1px !important;
+}
+
+:deep(.splide__arrows) {
+  display: none;
 }
 </style>
