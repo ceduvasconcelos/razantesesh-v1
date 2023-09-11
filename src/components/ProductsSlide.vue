@@ -3,25 +3,32 @@ import { ref, Ref } from 'vue'
 import { useAppStore } from '@/store/app'
 import SectionTitle from '@/components/SectionTitle.vue'
 import ProductCard from '@/components/ProductCard.vue'
+import { Splide, SplideSlide, Options } from '@splidejs/vue-splide'
+import '@splidejs/vue-splide/css/core'
 
 defineEmits(['onBuying'])
 
 const appStore = useAppStore()
 
-// @ts-ignore
-const slide: Ref<HTMLOListElement> = ref(null)
+const splideComponent = ref()
 
-const scroll = (location: 'next' | 'prev'): void => {
-  let offset = 188
-
-  if (location === 'prev') {
-    offset = -offset
+const splideOptions: Options = ref({
+  perPage: 5,
+  pagination: false,
+  arrows: false,
+  gap: 8,
+  breakpoints: {
+    960: {
+      perPage: 3,
+    },
+    600: {
+      perPage: 2,
+    },
   }
+})
 
-  slide.value.scrollBy({
-    left: offset,
-    behavior: 'smooth'
-  })
+const scroll = (direction: '+1' | '-1') => {
+  splideComponent.value.go(direction)
 }
 </script>
 
@@ -34,54 +41,34 @@ const scroll = (location: 'next' | 'prev'): void => {
             <v-btn
               icon="mdi-chevron-left"
               variant="plain"
-              class="mx-2 d-none d-md-flex"
-              density="compact"
-              @click="scroll('prev')"
+              class="mx-2"
+              density="comfortable"
+              @click="scroll('-1')"
             ></v-btn>
 
             <v-btn
               icon="mdi-chevron-right"
               variant="plain"
-              class="d-none d-md-flex"
-              density="compact"
-              @click="scroll('next')"
+              density="comfortable"
+              @click="scroll('+1')"
             ></v-btn>
           </template>
         </section-title>
       </v-col>
 
       <v-col cols="12">
-        <ol class="v-slide-group-container__custom pa-1" ref="slide">
-          <li v-for="product in appStore.products" :key="product.id" class="v-slide-group-item__custom">
+        <splide :options="splideOptions" ref="splideComponent">
+          <splide-slide v-for="product in appStore.products" :key="product.id">
             <product-card :product="product" @on-buying="product => $emit('onBuying', product)"></product-card>
-          </li>
-        </ol>
+          </splide-slide>
+        </splide>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <style scoped>
-.v-slide-group-container__custom {
-  overflow: visible;
-  overflow-x: auto;
-  flex-wrap: unset;
-  white-space: nowrap;
-  display: flex;
-  gap: 8px;
-}
-
-.v-slide-group-container__custom::-webkit-scrollbar {
-  display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-.v-slide-group-container__custom {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
-
-.v-slide-group-item__custom {
-  min-width: 180px;
+:deep(.splide__track) {
+  padding: 1px !important;
 }
 </style>
