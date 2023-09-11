@@ -10,7 +10,7 @@ defineEmits(['onBuying'])
 
 const appStore = useAppStore()
 
-const splideComponent = ref()
+const splideRef = ref()
 
 const splideOptions: Ref<Options> = ref({
   perPage: 5,
@@ -27,7 +27,7 @@ const splideOptions: Ref<Options> = ref({
 })
 
 const scroll = (direction: '+1' | '-1') => {
-  splideComponent.value.go(direction)
+  splideRef.value.go(direction)
 }
 
 const activePrevButton: Ref<boolean> = ref(true)
@@ -67,7 +67,7 @@ const onArrowsUpdated = (_: any, prev: HTMLButtonElement, next: HTMLButtonElemen
       </v-col>
 
       <v-col cols="12">
-        <splide :options="splideOptions" ref="splideComponent" @splide:arrows:updated="onArrowsUpdated">
+        <splide :options="splideOptions" ref="splideRef" @splide:arrows:updated="onArrowsUpdated">
           <splide-slide v-for="product in appStore.products" :key="product.id">
             <product-card :product="product" @on-buying="product => $emit('onBuying', product)"></product-card>
           </splide-slide>
