@@ -12,7 +12,7 @@ const appStore = useAppStore()
 
 const splideComponent = ref()
 
-const splideOptions: Options = ref({
+const splideOptions: Ref<Options> = ref({
   perPage: 5,
   pagination: false,
   gap: 8,
@@ -30,8 +30,8 @@ const scroll = (direction: '+1' | '-1') => {
   splideComponent.value.go(direction)
 }
 
-const activePrevButton = ref(true)
-const activeNextButton = ref(true)
+const activePrevButton: Ref<Boolean> = ref(true)
+const activeNextButton: Ref<Boolean> = ref(true)
 
 const onArrowsUpdated = (_: any, prev: HTMLButtonElement, next: HTMLButtonElement) => {
   activePrevButton.value = prev.hasAttribute('disabled')
