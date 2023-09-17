@@ -16,7 +16,6 @@ const splideOptions: Ref<Options> = ref({
   perPage: 5,
   pagination: false,
   drag: 'free',
-  snap: true,
   gap: 8,
   breakpoints: {
     960: {
