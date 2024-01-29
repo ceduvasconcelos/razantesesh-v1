@@ -3,23 +3,12 @@ import { defineStore } from 'pinia'
 import { computed, ComputedRef, ref, Ref } from 'vue'
 import productsJson from '@/products.json'
 import Product from '@/interfaces/Product'
-// @ts-ignore
-import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
 
 export const useAppStore = defineStore('app', () => {
   const products: Ref<Product[]> = ref(productsJson)
 
   const bestSellers: ComputedRef<Product[]> = computed(
     () => products.value.filter((product) => product.best_seller)
-  )
-
-  // only for development
-  products.value = products.value.map(
-    (product) => {
-      product.title = faker.commerce.productName(),
-      product.description = faker.commerce.productDescription()
-      return product
-    }
   )
 
   function find(id: number): Product | undefined {
