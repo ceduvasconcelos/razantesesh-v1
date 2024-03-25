@@ -20,8 +20,7 @@ defineEmits(['on-buying'])
     rounded="lg"
   >
     <v-img
-      :src="`/src/assets/products/${product.slug}-${product.banner}`"
-      :lazy-src="`/src/assets/products/${product.slug}-${product.banner}`"
+      src="@/assets/products/product-example-1-thumb-1.jpeg"
       min-height="180"
       aspect-ratio="1/1"
       cover
@@ -29,15 +28,16 @@ defineEmits(['on-buying'])
 
     <v-img
       v-if="product.overllapingBanner"
-      :src="`/src/assets/products/${product.slug}-${product.hover_banner}`"
-      :lazy-src="`/src/assets/products/${product.slug}-${product.hover_banner}`"
+      src="@/assets/products/product-example-1-thumb-1.jpeg"
       class="overlapping-banner"
       min-height="180"
       aspect-ratio="1/1"
       cover
     ></v-img>
 
-    <v-card-title class="text-subtitle-2 font-weight-medium">{{ product.title }}</v-card-title>
+    <v-card-title class="text-subtitle-2 font-weight-medium">
+      {{ product.title }}
+    </v-card-title>
 
     <v-card-text class="d-flex flex-column text-no-wrap mt-n3">
       <span class="text-caption text-decoration-line-through" style="height: 1rem;">
