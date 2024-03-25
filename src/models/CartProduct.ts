@@ -18,13 +18,20 @@ export default class CartProduct extends Product {
       product.description,
       product.best_seller,
       product.images,
+      product.overllapingBanner,
       product.tags,
       product.variants,
       product.features,
     )
 
+    const cartVariant = this.variants.find(variant => variant.id === cart.variant_id)
+
+    if (! cartVariant) {
+      throw new Error("Model not found.")
+    }
+
     this.cart_id = cart.id
-    this.cart_variant = this.variants.find(variant => variant.id === cart.variant_id)
+    this.cart_variant = cartVariant
     this.cart_quantity = cart.quantity
   }
 

@@ -1,5 +1,5 @@
 // Composables
-import { createRouter, createWebHistory, Router } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import Product from '@/models/Product'
 
 const routes = [

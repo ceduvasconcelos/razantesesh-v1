@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, PropType } from 'vue'
+import { PropType } from 'vue'
 import BuyButton from '@/components/BuyButton.vue'
 import formatMoney from '@/utils/formatMoney'
 import Product from '@/models/Product'

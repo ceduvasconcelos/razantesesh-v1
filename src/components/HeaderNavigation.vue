@@ -6,7 +6,7 @@ import AppNavigation from '@/components/AppNavigation.vue'
 
 const appStore = useAppStore()
 
-const appNavigation = ref(false)
+const showNavigation = ref(false)
 </script>
 
 <template>
@@ -21,7 +21,7 @@ const appNavigation = ref(false)
         ></v-img>
       </router-link>
 
-      <v-app-bar-nav-icon density="comfortable" @click="appNavigation = ! appNavigation"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon density="comfortable" @click="showNavigation = ! showNavigation"></v-app-bar-nav-icon>
     </template>
 
     <template #append>
@@ -49,5 +49,5 @@ const appNavigation = ref(false)
     </template>
   </v-app-bar>
 
-  <app-navigation v-model="appNavigation"></app-navigation>
+  <app-navigation v-model="showNavigation"></app-navigation>
 </template>
