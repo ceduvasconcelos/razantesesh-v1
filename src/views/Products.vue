@@ -1,65 +1,57 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { onBeforeRouteLeave } from 'vue-router'
+import { ref, Ref } from 'vue'
 import { useAppStore } from '@/store/app'
-import { useCartStore } from '@/store/cart'
+import Product from '@/models/Product'
 import ProductCard from '@/components/ProductCard.vue'
 import SectionTitle from '@/components/SectionTitle.vue'
 
-onBeforeRouteLeave(() => {
-  appStore.reset()
-})
-
 const appStore = useAppStore()
-const cartStore = useCartStore()
 
-const sortFilters = ref([
-  { label: 'Mais recentes' },
-  { label: 'Mais vendidos', column: 'best_sellers' },
-  { label: 'Menor preço', column: 'lowest_price' },
-  { label: 'Maior preço', column: 'biggest_price' }
+const products: Ref<Product[]> = ref(Product.all())
+
+const sortingOptions = ref([
+  { label: 'Mais recentes', type: 'most_recent' },
+  { label: 'Mais vendidos', type: 'best_sellers' },
+  { label: 'Menor preço', type: 'lowest_price' },
+  { label: 'Maior preço', type: 'biggest_price' }
 ])
 
-const sort = ref(sortFilters.value[0])
+const sortingInput = ref(sortingOptions.value[0])
+
+const sort = (type: any) => {
+  products.value = Product.orderBy(type)
+}
 </script>
 
 <template>
   <v-container>
     <v-row>
       <v-col cols="12">
-        <v-breadcrumbs class="pa-0">
-          <v-breadcrumbs-item :to="{ name: 'Home' }">Início</v-breadcrumbs-item>
-          <v-breadcrumbs-divider></v-breadcrumbs-divider>
-          <v-breadcrumbs-item disabled>Produtos</v-breadcrumbs-item>
-        </v-breadcrumbs>
-      </v-col>
-
-      <v-col cols="12">
-        <SectionTitle title="Produtos" />
+        <section-title title="Produtos"></section-title>
       </v-col>
 
       <v-col cols="12" md="3">
         <v-select
           label="Ordenar por:"
           :active="false"
-          v-model="sort"
-          :items="sortFilters"
+          v-model="sortingInput"
+          :items="sortingOptions"
           item-title="label"
-          item-value="column"
-          variant="solo-filled"
+          item-value="type"
+          variant="outlined"
           density="compact"
           rounded="lg"
           hide-details
           flat
           class="mt-n2 mb-4"
-          @update:modelValue="appStore.orderBy"
+          @update:modelValue="sort"
         ></v-select>
       </v-col>
     </v-row>
 
-    <v-row justify="center" class="mb-1" dense>
+    <v-row dense>
       <v-col
-        v-for="product in appStore.products"
+        v-for="product in products"
         :key="product.id"
         cols="6"
         sm="4"
@@ -68,7 +60,7 @@ const sort = ref(sortFilters.value[0])
       >
         <product-card
           :product="product"
-          @onBuying="cartStore.add"
+          @onBuying="appStore.addToCart"
         ></product-card>
       </v-col>
     </v-row>

@@ -8,10 +8,10 @@ defineProps({
 </script>
 
 <template>
-  <div class="d-flex align-baseline mb-6">
-    <div class="text-h5 text-no-wrap me-2">{{ title }}</div>
-
-    <v-divider></v-divider>
+  <div class="d-flex align-baseline">
+    <div class="text-h5 font-weight-medium text-no-wrap me-2 me-auto">
+      {{ title }}
+    </div>
 
     <slot name="append"></slot>
   </div>

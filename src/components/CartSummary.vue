@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
+import formatMoney from '@/utils/formatMoney'
 
 defineProps({
   quantity: {
@@ -39,7 +40,7 @@ const confirm = (): void => {
         <div class="d-flex justify-space-between">
           <span class="font-weight-medium">Total ({{ quantity }} {{ quantity > 1 ? 'itens' : 'item' }})</span>
 
-          <span class="font-weight-medium">R$ {{ total }},00</span>
+          <span class="font-weight-medium">{{ formatMoney(total) }}</span>
         </div>
       </div>
 

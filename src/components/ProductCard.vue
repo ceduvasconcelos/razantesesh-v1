@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { PropType } from 'vue'
-import Product from '@/interfaces/Product'
-import BuyButton from './BuyButton.vue'
+import { ref, PropType } from 'vue'
+import BuyButton from '@/components/BuyButton.vue'
+import formatMoney from '@/utils/formatMoney'
+import Product from '@/models/Product'
 
 defineProps({
   product: {
@@ -19,32 +20,57 @@ defineEmits(['on-buying'])
     rounded="lg"
   >
     <v-img
-      :src="product.banner"
-      :lazy-src="product.banner"
+      :src="`/src/assets/products/${product.slug}-${product.banner}`"
+      :lazy-src="`/src/assets/products/${product.slug}-${product.banner}`"
       min-height="180"
-      aspect-ratio="4/3"
+      aspect-ratio="1/1"
       cover
     ></v-img>
 
-    <v-card-title class="text-subtitle-1 font-weight-regular text-md-h6">{{ product.title }}</v-card-title>
+    <v-img
+      v-if="product.overllapingBanner"
+      :src="`/src/assets/products/${product.slug}-${product.hover_banner}`"
+      :lazy-src="`/src/assets/products/${product.slug}-${product.hover_banner}`"
+      class="overlapping-banner"
+      min-height="180"
+      aspect-ratio="1/1"
+      cover
+    ></v-img>
 
-    <v-card-text class="d-flex flex-column text-no-wrap mt-n2">
-      <span class="text-caption text-decoration-line-through" style="height: 1rem;">{{ product.id < 4 ? `R$ ${product.price + 15},00` : '' }}</span>
+    <v-card-title class="text-subtitle-2 font-weight-medium">{{ product.title }}</v-card-title>
+
+    <v-card-text class="d-flex flex-column text-no-wrap mt-n3">
+      <span class="text-caption text-decoration-line-through" style="height: 1rem;">
+        {{ product.discount ? formatMoney(product.priceWithoutDiscount) : '' }}
+      </span>
 
       <div class="d-flex align-baseline">
-        <span class="text-subtitle-1">R$ {{ product.price }},00</span>
+        <span class="text-subtitle-1 font-weight-medium">{{ formatMoney(product.price) }}</span>
 
-
-        <div v-if="product.id < 4" class="text-green-darken-1 font-weight-medium ms-auto">
-          <v-icon icon="mdi-arrow-down" size="x-small"></v-icon>
-
-          {{ Math.floor((((product.price + 15) - product.price) / (product.price + 15)) * 100) }}%
+        <div v-if="product.discount" class="text-caption text-green-darken-1 ms-auto">
+          {{ product.discount }}% OFF
         </div>
       </div>
     </v-card-text>
 
-    <v-card-actions class="mb-1 mt-n3">
-      <buy-button @on-buying="$emit('on-buying', product.id)"></buy-button>
+    <v-card-actions class="mt-n4">
+      <buy-button @on-buying="$emit('on-buying', product.id, product.variants[0].id)"></buy-button>
     </v-card-actions>
   </v-card>
 </template>
+
+<style scoped>
+.overlapping-banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+
+.overlapping-banner:hover {
+  opacity: 1;
+}
+</style>

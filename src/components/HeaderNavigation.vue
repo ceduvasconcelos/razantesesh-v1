@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { useCartStore } from '@/store/cart'
-import AppNavigation from '@/components/AppNavigation.vue'
 import { ref } from 'vue'
+import { useAppStore } from '@/store/app'
+import formatMoney from '@/utils/formatMoney'
+import AppNavigation from '@/components/AppNavigation.vue'
 
-const cartStore = useCartStore()
+const appStore = useAppStore()
 
 const appNavigation = ref(false)
 </script>
@@ -31,9 +32,9 @@ const appNavigation = ref(false)
         rounded="lg"
       >
         <v-badge
-          v-if="cartStore.quantity"
+          v-if="appStore.cartQuantity"
           color="error"
-          :content="cartStore.quantity"
+          :content="appStore.cartQuantity"
           bordered
           offset-x="-2"
           offset-y="-2"
@@ -43,7 +44,7 @@ const appNavigation = ref(false)
 
         <v-icon v-else size="large">mdi-cart-outline</v-icon>
 
-        <span class="ms-4">R$ {{ cartStore.total }},00</span>
+        <span class="ms-4">{{ formatMoney(appStore.cartPrice) }}</span>
       </v-btn>
     </template>
   </v-app-bar>

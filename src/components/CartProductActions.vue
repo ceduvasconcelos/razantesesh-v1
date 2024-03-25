@@ -1,18 +1,16 @@
 <script setup lang="ts">
-import { ref, PropType } from 'vue'
-import { useCartStore } from '@/store/cart'
-import Product from '@/interfaces/Product'
+import { ref } from 'vue'
+import formatMoney from '@/utils/formatMoney'
+import CartProduct from '@/models/CartProduct'
 
 defineProps({
   product: {
-    type: Object as PropType<Product>,
+    type: CartProduct,
     required: true
   }
 })
 
 const emit = defineEmits(['removeFromCart', 'changeQuantity'])
-
-const cartStore = useCartStore()
 
 const loadingRemoveButton = ref(false)
 
@@ -32,32 +30,57 @@ const removeFromCart = (id: number): void => {
     <div>
       <v-card-title class="text-subtitle-1 font-weight-regular text-md-h6 text-wrap">{{ product.title }}</v-card-title>
 
-      <v-card-text class="text-subtitle-1">R$ {{ product.price }},00</v-card-text>
+      <v-card-text class="d-flex flex-column mt-n2 mb-n4">
+        <template v-if="product.discount">
+          <span class="text-caption text-decoration-line-through">{{ formatMoney(product.price) }}</span>
+
+          <div class="d-flex align-baseline">
+            <span class="text-subtitle-1 font-weight-medium">{{ formatMoney(product.price) }}</span>
+
+            <div class="text-caption text-green-darken-1 ms-2">
+              {{ product.discount }}% OFF
+            </div>
+          </div>
+        </template>
+
+        <template v-else>
+          <span class="text-subtitle-1 font-weight-medium ">{{ formatMoney(product.price) }}</span>
+        </template>
+
+        <template v-if="(product.hasFeatures())">
+          <div
+            v-for="(feature, index) in product.features"
+            :key="index"
+            class="text-caption"
+          >
+            {{ feature }}: {{ product.cart_variant.options[index] }}
+          </div>
+        </template>
+      </v-card-text>
 
       <v-card-actions>
         <v-btn
           icon="mdi-minus"
           density="comfortable"
           class="me-2"
-          :disabled="cartStore.productQuantity(product.id) < 2"
-          @click="emit('changeQuantity', product.id, cartStore.productQuantity(product.id) - 1)"
+          :disabled="product.cart_quantity < 2"
+          @click="emit('changeQuantity', product.cart_id, product.cart_quantity - 1)"
         ></v-btn>
 
-        {{ cartStore.productQuantity(product.id) }}
+        {{ product.cart_quantity }}
 
         <v-btn
           icon="mdi-plus"
           density="comfortable"
-          @click="emit('changeQuantity', product.id, cartStore.productQuantity(product.id) + 1)"
+          @click="emit('changeQuantity', product.cart_id, product.cart_quantity + 1)"
         ></v-btn>
 
         <v-btn
           :loading="loadingRemoveButton"
-          variant="plain"
-          icon="mdi-close-circle"
+          icon="mdi-trash-can-outline"
           size="small"
           class="ms-4"
-          @click="removeFromCart(product.id)"
+          @click="removeFromCart(product.cart_id)"
         ></v-btn>
       </v-card-actions>
     </div>
@@ -67,7 +90,7 @@ const removeFromCart = (id: number): void => {
       size="125"
       rounded="lg"
     >
-      <v-img :src="product.banner"></v-img>
+      <v-img :src="`/src/assets/products/${product.slug}-${product.banner}`" cover></v-img>
     </v-avatar>
   </div>
 </template>

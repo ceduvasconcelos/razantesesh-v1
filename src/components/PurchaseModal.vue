@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { VBottomSheet } from 'vuetify/lib/labs/components.mjs'
-
 defineProps({
   modelValue: {
     type: Boolean,

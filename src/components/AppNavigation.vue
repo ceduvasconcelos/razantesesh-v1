@@ -11,7 +11,8 @@ defineEmits(['update:model-value'])
 
 <template>
   <v-navigation-drawer
-    temporary
+    touchless
+    disable-resize-watcher
     :model-value="modelValue"
     @update:model-value="value => $emit('update:model-value', value)"
   >

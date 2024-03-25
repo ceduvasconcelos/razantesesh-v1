@@ -1,38 +1,36 @@
 <script setup lang="ts">
 import { useAppStore } from '@/store/app'
-import { useCartStore } from '@/store/cart'
+import Product from '@/models/Product'
 import ProductCard from '@/components/ProductCard.vue'
-import SectionTitle from '@/components/SectionTitle.vue'
+import SubSectionTitle from '@/components/SubSectionTitle.vue'
 
 const appStore = useAppStore()
-const cartStore = useCartStore()
 </script>
 
 <template>
   <v-container fluid>
     <v-row>
       <v-col cols="12">
-        <v-parallax class="rounded-lg">
-          <v-img
-            src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"
-            :height="400"
-            cover
-          ></v-img>
-        </v-parallax>
+        <v-img
+          class="rounded-lg"
+          aspect-ratio="16/9"
+          cover
+          src="https://www.pikraken.com/cdn/shop/files/banner.webp?v=1706713711&width=3840"
+        ></v-img>
       </v-col>
     </v-row>
   </v-container>
 
   <v-container>
     <v-row>
-      <v-col cols="12">
-        <section-title title="Mais vendidos" icon="mdi-fire-circle"></section-title>
+      <v-col cols="12" class="mb-2">
+        <sub-section-title title="Em destaque"></sub-section-title>
       </v-col>
     </v-row>
 
-    <v-row justify="center" dense>
+    <v-row dense>
       <v-col
-        v-for="product in appStore.bestSellers"
+        v-for="product in Product.bestSellers().slice(0, 4)"
         :key="product.id"
         cols="6"
         sm="4"
@@ -41,12 +39,12 @@ const cartStore = useCartStore()
       >
         <product-card
           :product="product"
-          @onBuying="cartStore.add"
+          @onBuying="appStore.addToCart"
         ></product-card>
       </v-col>
     </v-row>
 
-    <v-row justify="center" class="mt-4" dense>
+    <v-row justify="center" class="my-1" dense>
       <v-col cols="12" md="6">
         <v-btn
           :to="{ name: 'Products' }"

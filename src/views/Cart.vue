@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useCartStore } from '@/store/cart'
+import { useAppStore } from '@/store/app'
 import CartSummary from '@/components/CartSummary.vue'
 import CartProductActions from '@/components/CartProductActions.vue'
 
-const cartStore = useCartStore()
+const appStore = useAppStore()
 </script>
 
 <template>
@@ -11,21 +11,21 @@ const cartStore = useCartStore()
     <v-row>
       <v-col cols="12" md="4" order-md="12">
         <cart-summary
-          :quantity="cartStore.quantity"
-          :total="cartStore.total"
-          @onConfirm="cartStore.confirm"
+          :quantity="appStore.cartQuantity"
+          :total="appStore.cartPrice"
+          @onConfirm="appStore.confirmPurchase"
         ></cart-summary>
       </v-col>
 
-      <v-col v-if="cartStore.quantity" cols="12" md="8">
+      <v-col v-if="appStore.cartQuantity" cols="12" md="8">
         <v-card rounded="lg">
-          <template v-for="(product, index) in cartStore.products" :key="product.id">
+          <template v-for="(product, index) in appStore.cartProducts" :key="product.id">
             <v-divider v-if="index"></v-divider>
 
             <cart-product-actions
               :product="product"
-              @changeQuantity="cartStore.updateQuantity"
-              @removeFromCart="cartStore.remove"
+              @changeQuantity="appStore.updateCartQuantity"
+              @removeFromCart="appStore.removeFromCart"
             ></cart-product-actions>
           </template>
         </v-card>
@@ -40,14 +40,14 @@ const cartStore = useCartStore()
           <p class="font-weight-medium">Seu carrinho está vazio.</p>
 
           <p class="font-weight-light text-caption">Adicione produtos para continuar suas compras!</p>
-          
+
           <v-btn
             class="mt-4"
             variant="outlined"
             rounded="lg"
             prepend-icon="mdi-shopping"
             :active="false"
-            :to="{ name: 'Home' }"
+            :to="{ name: 'Products' }"
           >
             Conferir produtos
           </v-btn>

@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <v-footer class="d-flex justify-space-between mt-4 px-0" border>
+  <v-footer class="d-flex justify-space-between px-0 border-t border-b">
     <v-container>
       <v-row dense>
         <v-col cols="12">

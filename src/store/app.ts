@@ -1,50 +1,94 @@
 // Utilities
 import { defineStore } from 'pinia'
-import { computed, ComputedRef, ref, Ref } from 'vue'
-import productsJson from '@/products.json'
-import Product from '@/interfaces/Product'
+import { computed, ComputedRef, ref, Ref, watch } from 'vue'
+import Product from '@/models/Product'
+import CartProduct from '@/models/CartProduct'
+import ICart from '@/interfaces/ICart'
+import formatMoney from '@/utils/formatMoney'
 
 export const useAppStore = defineStore('app', () => {
-  const products: Ref<Product[]> = ref(productsJson)
+  const cart: Ref<ICart[]> = ref(JSON.parse(localStorage.getItem('cart') || '[]'))
 
-  const bestSellers: ComputedRef<Product[]> = computed(
-    () => products.value.filter((product) => product.best_seller)
+  watch(cart.value, (cart) => {
+    localStorage.setItem('cart', JSON.stringify(cart))
+  })
+
+  const cartProducts: ComputedRef<CartProduct[]> = computed(
+    () => cart.value.map((cart) => {
+      const product = Product.find(cart.product_id)
+
+      return new CartProduct(product, cart)
+    })
   )
 
-  function find(id: number): Product | undefined {
-    return products.value.find(product => product.id === id)
+  const cartPrice: ComputedRef<number> = computed(
+    () => cartProducts.value.reduce((total, product) => total + (product.price * product.cart_quantity), 0)
+  )
+
+  const cartQuantity: ComputedRef<number> = computed(
+    () => cartProducts.value.reduce((quantity, product) => quantity + product.cart_quantity, 0)
+  )
+
+  const showPurchaseModal: Ref<boolean> = ref(false)
+
+  function addToCart(product_id: number, variant_id: number, quantity: number = 1): void {
+    const storedCart = cart.value.find(cart => cart.product_id === product_id && cart.variant_id === variant_id)
+
+    if (storedCart) {
+      updateCartQuantity(storedCart.id, storedCart.quantity + quantity)
+
+      showPurchaseModal.value = true
+
+      return
+    }
+
+    cart.value.push({
+      id: cart.value.length + 1,
+      product_id,
+      variant_id,
+      quantity
+    })
+
+    showPurchaseModal.value = true
   }
 
-  function findBySlug(slug: string): Product | undefined {
-    return products.value.find(product => product.slug === slug)
+  function updateCartQuantity(cart_id: number, quantity: number): void {
+    const productIndex = cart.value.findIndex(cart => cart.id === cart_id)
+
+    cart.value[productIndex].quantity = quantity
   }
 
-  function whereIn(products_id: Array<number>): Array<Product> | undefined {
-    return products.value.filter(product => products_id.includes(product.id))
+  function removeFromCart(cart_id: number): void {
+    const cartIndex = cart.value.findIndex(cart => cart.id === cart_id)
+
+    cart.value.splice(cartIndex, 1);
   }
 
-  function orderBy(type: string): void {
-    products.value.sort((a, b) => a.id - b.id)
+  function confirmPurchase(): void {
+    let text = 'Olá! gostaria de fazer um pedido. '
+    text += 'Os produtos escolhidos são:%0A%0A'
 
-    if (type === 'best_sellers')
-      products.value.sort(
-        (a, b) => (a.best_seller === b.best_seller) ? 0 : a.best_seller ? -1 : 1
-      )
+    cartProducts.value.forEach(product => {
+      text += `_${product.cart_quantity}x ${product.title} (${formatMoney(product.price)})`
+      text += ` - `
+      text += `${formatMoney(product.price * product.cart_quantity)}_%0A%0A`
+    });
 
-    if (type === 'lowest_price')
-      products.value.sort(
-        (a, b) => a.price - b.price
-      )
+    text += `Total do pedido (${cartQuantity.value} ${cartQuantity.value > 1 ? 'itens' : 'item'}): `
+    text += formatMoney(cartPrice.value)
 
-    if (type === 'biggest_price')
-      products.value.sort(
-        (a, b) => b.price - a.price
-      )
+    window.open(`https://api.whatsapp.com/send?phone=5585981887454&text=${text}`);
   }
 
-  function reset(): void {
-    products.value = [...productsJson]
+  return {
+    cart,
+    cartProducts,
+    cartPrice,
+    cartQuantity,
+    showPurchaseModal,
+    addToCart,
+    updateCartQuantity,
+    removeFromCart,
+    confirmPurchase
   }
-
-  return { products, bestSellers, find, findBySlug, whereIn, orderBy, reset }
 })

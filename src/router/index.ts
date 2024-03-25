@@ -1,5 +1,6 @@
 // Composables
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, Router } from 'vue-router'
+import Product from '@/models/Product'
 
 const routes = [
   {
@@ -22,7 +23,16 @@ const routes = [
         path: ':slug',
         name: 'Product',
         component: () => import('@/views/Product.vue'),
-        props: true
+        props: (route: any) => ({
+          product: Product.findBySlug(route.params.slug),
+          selectedVariant: Product.findBySlug(route.params.slug).variants.find(variant => {
+            if (! route.query.variant) {
+              return true
+            }
+
+            return variant.id == route.query.variant
+          }),
+        })
       },
       {
         path: '',
@@ -45,6 +55,10 @@ const router = createRouter({
     if (savedPosition) {
       return savedPosition
     } else {
+      if (to.params.slug === from.params.slug) {
+        return
+      }
+
       return { top: 0 }
     }
   }
