@@ -26,7 +26,7 @@ const selectedImageIndex = ref(0)
         <v-carousel-item
           v-for="(image, index) in product.images"
           :key="index"
-          :src="`/src/assets/products/${product.slug}-${image}`"
+          :src="'/products/' + product.slug + '-' + image"
           aspect-ratio="1/1"
           cover
         ></v-carousel-item>
@@ -51,7 +51,7 @@ const selectedImageIndex = ref(0)
                   :gradient="isSelected ? '' : 'to bottom, rgba(248,248,255,.4), rgba(248,248,255,.4)'"
                   aspect-ratio="1"
                   cover
-                  :src="`/src/assets/products/${product.slug}-${image}`"
+                  :src="'/products/' + product.slug + '-' + image"
                 ></v-img>
               </v-card>
             </v-item>

@@ -90,7 +90,7 @@ const removeFromCart = (id: number): void => {
       size="125"
       rounded="lg"
     >
-      <v-img :src="`/src/assets/products/${product.slug}-${product.banner}`" cover></v-img>
+      <v-img :src="'/products/' + product.slug + '-' + product.banner" cover></v-img>
     </v-avatar>
   </div>
 </template>
