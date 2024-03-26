@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { PropType } from 'vue'
 import BuyButton from '@/components/BuyButton.vue'
 import formatMoney from '@/utils/formatMoney'
 import Product from '@/models/Product'
 
 defineProps({
   product: {
-    type: Object as PropType<Product>,
+    type: Product,
     required: true
   }
 })
@@ -20,7 +19,7 @@ defineEmits(['on-buying'])
     rounded="lg"
   >
     <v-img
-      src="@/assets/products/product-example-1-thumb-1.jpeg"
+      :src="'/products/' + product.slug + '-' + product.banner"
       min-height="180"
       aspect-ratio="1/1"
       cover
@@ -28,7 +27,7 @@ defineEmits(['on-buying'])
 
     <v-img
       v-if="product.overllapingBanner"
-      src="@/assets/products/product-example-1-thumb-1.jpeg"
+      :src="'/products/' + product.slug + '-' + product.hover_banner"
       class="overlapping-banner"
       min-height="180"
       aspect-ratio="1/1"
