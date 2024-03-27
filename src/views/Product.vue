@@ -169,4 +169,9 @@ const availableVariant = (variants: any[], feature_index: number) => {
 .option-disabled {
   border-style: dashed !important;
 }
+
+:deep(.swiper-slide) {
+  display: inline !important;
+  box-sizing: border-box !important;
+}
 </style>

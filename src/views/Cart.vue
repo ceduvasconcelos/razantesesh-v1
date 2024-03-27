@@ -18,7 +18,7 @@ const appStore = useAppStore()
       </v-col>
 
       <v-col v-if="appStore.cartQuantity" cols="12" md="8">
-        <v-card rounded="lg">
+        <v-card rounded="lg" border flat>
           <template v-for="(product, index) in appStore.cartProducts" :key="product.id">
             <v-divider v-if="index"></v-divider>
 
@@ -33,9 +33,9 @@ const appStore = useAppStore()
 
       <v-col v-else cols="12" md="8">
         <v-sheet
-          elevation="1"
           rounded="lg"
           class="d-flex flex-column align-center justify-center flex-wrap text-center mx-auto py-16 px-2"
+          border
         >
           <p class="font-weight-medium">Seu carrinho está vazio.</p>
 

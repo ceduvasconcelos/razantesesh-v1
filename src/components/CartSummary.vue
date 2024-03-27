@@ -28,7 +28,7 @@ const confirm = (): void => {
 </script>
 
 <template>
-  <v-sheet elevation="1" rounded="lg">
+  <v-sheet rounded="lg" border>
     <template v-if="quantity">
       <div class="pa-4 font-weight-medium">
         Resumo da compra

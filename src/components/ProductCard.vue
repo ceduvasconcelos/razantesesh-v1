@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import BuyButton from '@/components/BuyButton.vue'
 import formatMoney from '@/utils/formatMoney'
 import Product from '@/models/Product'
@@ -11,28 +12,41 @@ defineProps({
 })
 
 defineEmits(['on-buying'])
+
+const isHovered = ref(false)
 </script>
 
 <template>
   <v-card
     :to="{ name: 'Product', params: { slug: product.slug } }"
     rounded="lg"
+    border
+    flat
   >
-    <v-img
-      :src="'/products/' + product.slug + '-' + product.banner"
-      min-height="180"
-      aspect-ratio="1/1"
-      cover
-    ></v-img>
+    <div
+      class="product-card-thumbnails"
+      @touchstart = "isHovered = true"
+      @touchend = "isHovered = false"
+      @mouseover="isHovered = true"
+      @mouseleave="isHovered = false"
+    >
+      <v-img
+        :src="'/products/' + product.slug + '-' + product.banner"
+        min-height="180"
+        aspect-ratio="1/1"
+        cover
+      ></v-img>
 
-    <v-img
-      v-if="product.overllapingBanner"
-      :src="'/products/' + product.slug + '-' + product.hover_banner"
-      class="overlapping-banner"
-      min-height="180"
-      aspect-ratio="1/1"
-      cover
-    ></v-img>
+      <transition name="fade">
+        <v-img
+          v-if="product.overllapingBanner && isHovered"
+          :src="'/products/' + product.slug + '-' + product.hover_banner"
+          min-height="180"
+          aspect-ratio="1/1"
+          cover
+        ></v-img>
+      </transition>
+    </div>
 
     <v-card-title class="text-subtitle-2 font-weight-medium">
       {{ product.title }}
@@ -59,17 +73,19 @@ defineEmits(['on-buying'])
 </template>
 
 <style scoped>
-.overlapping-banner {
+.product-card-thumbnails :not(:first-child) {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: auto;
-  opacity: 0;
+}
+
+.fade-enter-active, .fade-leave-active {
   transition: opacity .25s ease;
 }
 
-.overlapping-banner:hover {
-  opacity: 1;
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>
