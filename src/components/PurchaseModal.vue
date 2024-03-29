@@ -28,12 +28,6 @@ defineEmits(['update:model-value'])
 
       <v-row dense>
         <v-col cols="12" md="6">
-          <v-btn variant="tonal" rounded="lg" block @click="$emit('update:model-value', false)">
-            Continuar comprando
-          </v-btn>
-        </v-col>
-
-        <v-col cols="12" md="6">
           <v-btn
             :to="{ name: 'Cart' }"
             variant="outlined"
@@ -43,6 +37,12 @@ defineEmits(['update:model-value'])
             @click="$emit('update:model-value', false)"
           >
             Ver carrinho
+          </v-btn>
+        </v-col>
+
+        <v-col cols="12" md="6">
+          <v-btn variant="outlined" rounded="lg" block @click="$emit('update:model-value', false)">
+            Continuar comprando
           </v-btn>
         </v-col>
       </v-row>
