@@ -21,7 +21,9 @@ defineEmits(['update:model-value'])
           <div class="d-flex flex-column justify-center align-center mb-4">
             <v-icon icon="mdi-checkbox-marked-circle-outline" size="x-large" color="green-darken-2"></v-icon>
 
-            <p class="font-weight-medium mt-1">Adicionado ao carrinho</p>
+            <p class="font-weight-medium mt-1">
+              Adicionado ao carrinho
+            </p>
           </div>
         </v-col>
       </v-row>
@@ -41,7 +43,12 @@ defineEmits(['update:model-value'])
         </v-col>
 
         <v-col cols="12" md="6">
-          <v-btn variant="outlined" rounded="lg" block @click="$emit('update:model-value', false)">
+          <v-btn
+            variant="outlined"
+            rounded="lg"
+            block
+            @click="$emit('update:model-value', false)"
+          >
             Continuar comprando
           </v-btn>
         </v-col>
