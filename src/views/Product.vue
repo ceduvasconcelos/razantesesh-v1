@@ -47,7 +47,7 @@ const availableVariant = (variants: any[], feature_index: number) => {
 
 <template>
   <v-container>
-    <v-row>
+    <v-row class="mb-12">
       <v-col cols="12">
         <v-breadcrumbs class="pa-0">
           <v-breadcrumbs-item :to="{ name: 'Products' }">Produtos</v-breadcrumbs-item>
@@ -160,9 +160,13 @@ const availableVariant = (variants: any[], feature_index: number) => {
         </div>
       </v-col>
     </v-row>
-  </v-container>
 
-  <products-slide @on-buying="appStore.addToCart"></products-slide>
+    <v-row>
+      <v-col cols="12">
+        <products-slide @on-buying="appStore.addToCart"></products-slide>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <style scoped>

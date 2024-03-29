@@ -1,87 +1,78 @@
 <script setup lang="ts">
-import { ref, Ref } from 'vue'
+import { ref } from 'vue'
 import Product from '@/models/Product'
 import SubSectionTitle from '@/components/SubSectionTitle.vue'
 import ProductCard from '@/components/ProductCard.vue'
-import { Splide, SplideSlide, Options } from '@splidejs/vue-splide'
-import '@splidejs/vue-splide/css/core'
+import SlideControls from '@/components/SlideControls.vue'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { Navigation, Scrollbar } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/scrollbar'
 
 defineEmits(['onBuying'])
 
-const splideRef = ref()
-
-const splideOptions: Ref<Options> = ref({
-  perPage: 5,
-  pagination: false,
-  drag: false,
-  gap: 8,
-  breakpoints: {
-    960: {
-      perPage: 3,
-    },
-    600: {
-      perPage: 2,
-    },
-  }
-})
-
-const scroll = (direction: '+1' | '-1') => {
-  splideRef.value.go(direction)
-}
-
-const activePrevButton: Ref<boolean> = ref(true)
-const activeNextButton: Ref<boolean> = ref(true)
-
-const onArrowsUpdated = (_: any, prev: HTMLButtonElement, next: HTMLButtonElement) => {
-  activePrevButton.value = prev.hasAttribute('disabled')
-
-  activeNextButton.value = next.hasAttribute('disabled')
-}
+const modules = ref([
+  Navigation,
+  Scrollbar
+])
 </script>
 
 <template>
-  <v-container>
-    <v-row dense>
-      <v-col cols="12" class="mt-12">
-        <sub-section-title title="Confira também">
-          <template #append>
-            <v-btn
-              icon="mdi-chevron-left"
-              variant="plain"
-              class="mx-2"
-              density="comfortable"
-              :disabled="activePrevButton"
-              @click="scroll('-1')"
-            ></v-btn>
+  <swiper
+    :modules="modules"
+    :allow-touch-move="false"
+    :slides-per-view="2"
+    :space-between="8"
+    :scrollbar="{
+      draggable: true,
+    }"
+    :breakpoints="{
+      '0': {
+        allowTouchMove: true,
+        scrollbar: {
+          hide: false
+        }
+      },
+      '600': {
+        slidesPerView: 3,
+      },
+      '960': {
+        slidesPerView: 4,
+      },
+      '1024': {
+        slidesPerView: 5,
+      }
+    }"
+    style="padding: 1px 1px 1rem 1px;"
+  >
+    <template v-slot:container-start>
+      <sub-section-title title="Confira também">
+        <template v-slot:append>
+          <slide-controls>
+            <template v-slot:prepend>
+              <v-btn
+                :to="{ name: 'Products' }"
+                variant="plain"
+                rounded="lg"
+              >
+                Ver todos
+              </v-btn>
+            </template>
+          </slide-controls>
+        </template>
+      </sub-section-title>
+    </template>
 
-            <v-btn
-              icon="mdi-chevron-right"
-              variant="plain"
-              density="comfortable"
-              :disabled="activeNextButton"
-              @click="scroll('+1')"
-            ></v-btn>
-          </template>
-        </sub-section-title>
-      </v-col>
-
-      <v-col cols="12">
-        <splide :options="splideOptions" ref="splideRef" @splide:arrows:updated="onArrowsUpdated">
-          <splide-slide v-for="product in Product.all()" :key="product.id">
-            <product-card :product="product" @on-buying="product => $emit('onBuying', product.id, product.variants[0].id)"></product-card>
-          </splide-slide>
-        </splide>
-      </v-col>
-    </v-row>
-  </v-container>
+    <swiper-slide
+      v-for="product in Product.all()"
+      :key="product.id"
+      class="mt-4"
+    >
+      <product-card
+        :product="product"
+        @on-buying="product => $emit('onBuying', product.id, product.variants[0].id)"
+        ></product-card>
+    </swiper-slide>
+  </swiper>
 </template>
-
-<style scoped>
-:deep(.splide__track) {
-  padding: 1px !important;
-}
-
-:deep(.splide__arrows) {
-  display: none;
-}
-</style>

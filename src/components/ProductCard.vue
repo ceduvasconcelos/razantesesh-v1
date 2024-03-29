@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted, onUpdated } from 'vue'
+import { VCard } from 'vuetify/lib/components/index.mjs'
 import BuyButton from '@/components/BuyButton.vue'
 import formatMoney from '@/utils/formatMoney'
 import Product from '@/models/Product'
@@ -13,35 +14,51 @@ defineProps({
 
 defineEmits(['on-buying'])
 
+const productCardRef = ref<InstanceType<typeof VCard> | null>(null)
+
+const productCardWidth = ref(0)
+
+onUpdated(() => {
+  productCardWidth.value = productCardRef.value?.$el.clientWidth
+})
+
+onMounted(() => {
+  productCardWidth.value = productCardRef.value?.$el.clientWidth
+})
+
 const isHovered = ref(false)
 </script>
 
 <template>
   <v-card
+    ref="productCardRef"
     :to="{ name: 'Product', params: { slug: product.slug } }"
     rounded="lg"
     border
     flat
   >
     <div
+      id="yourId"
       class="product-card-thumbnails"
-      @touchstart = "isHovered = true"
-      @touchend = "isHovered = false"
+      @touchstart="isHovered = true"
+      @touchend="isHovered = false"
       @mouseover="isHovered = true"
       @mouseleave="isHovered = false"
     >
       <v-img
         :src="'/products/' + product.slug + '-' + product.banner"
-        min-height="180"
+        :lazy-src="'/products/' + product.slug + '-' + product.banner"
+        :min-height="productCardWidth"
         aspect-ratio="1/1"
         cover
       ></v-img>
 
-      <transition name="fade">
+      <transition name="product-card-thumbnails-fade">
         <v-img
           v-if="product.overllapingBanner && isHovered"
           :src="'/products/' + product.slug + '-' + product.hover_banner"
-          min-height="180"
+          :lazy-src="'/products/' + product.slug + '-' + product.banner"
+          :min-height="productCardWidth"
           aspect-ratio="1/1"
           cover
         ></v-img>
@@ -81,11 +98,13 @@ const isHovered = ref(false)
   height: auto;
 }
 
-.fade-enter-active, .fade-leave-active {
+.product-card-thumbnails-fade-enter-active,
+.product-card-thumbnails-fade-leave-active {
   transition: opacity .25s ease;
 }
 
-.fade-enter, .fade-leave-to {
+.product-card-thumbnails-fade-enter-from,
+.product-card-thumbnails-fade-leave-to {
   opacity: 0;
 }
 </style>
