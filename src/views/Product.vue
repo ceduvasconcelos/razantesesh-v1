@@ -130,7 +130,7 @@ const availableVariant = (variants: any[], feature_index: number) => {
         <v-divider class="my-6"></v-divider>
 
         <v-row>
-          <v-col cols="12" md="5">
+          <v-col cols="12" md="5" lg="4">
             <v-select
               v-model="selectedQuantity"
               label="Quantidade"
