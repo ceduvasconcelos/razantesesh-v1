@@ -78,5 +78,6 @@
 <style scoped>
 .v-footer {
   max-height: min-content;
+  flex: 0 1 auto;
 }
 </style>
