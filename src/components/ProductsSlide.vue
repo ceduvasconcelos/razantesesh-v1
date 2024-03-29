@@ -49,17 +49,15 @@ const modules = ref([
     <template v-slot:container-start>
       <sub-section-title title="Confira também">
         <template v-slot:append>
-          <slide-controls>
-            <template v-slot:prepend>
-              <v-btn
-                :to="{ name: 'Products' }"
-                variant="plain"
-                rounded="lg"
-              >
-                Ver todos
-              </v-btn>
-            </template>
-          </slide-controls>
+          <v-btn
+            :to="{ name: 'Products' }"
+            variant="plain"
+            rounded="lg"
+          >
+            Ver todos
+          </v-btn>
+
+          <slide-controls></slide-controls>
         </template>
       </sub-section-title>
     </template>
@@ -72,7 +70,7 @@ const modules = ref([
       <product-card
         :product="product"
         @on-buying="product => $emit('onBuying', product.id, product.variants[0].id)"
-        ></product-card>
+      ></product-card>
     </swiper-slide>
   </swiper>
 </template>

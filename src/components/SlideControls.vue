@@ -6,8 +6,6 @@ const swiper = useSwiper()
 
 <template>
   <div class="slide-controls d-flex justify-space-between">
-    <slot name="prepend"></slot>
-
     <v-btn
       class="slide-control-prev"
       icon="mdi-chevron-left"
