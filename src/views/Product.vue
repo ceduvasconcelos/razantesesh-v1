@@ -130,7 +130,7 @@ const availableVariant = (variants: any[], feature_index: number) => {
         <v-divider class="my-6"></v-divider>
 
         <v-row>
-          <v-col cols="12" md="4">
+          <v-col cols="12" md="5">
             <v-select
               v-model="selectedQuantity"
               label="Quantidade"
@@ -143,7 +143,7 @@ const availableVariant = (variants: any[], feature_index: number) => {
             ></v-select>
           </v-col>
 
-          <v-col cols="12" md="8">
+          <v-col cols="12">
             <buy-button
               size="large"
               @on-buying="appStore.addToCart(product.id, selectedVariant.id, selectedQuantity)"

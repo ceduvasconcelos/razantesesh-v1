@@ -85,12 +85,16 @@ const removeFromCart = (id: number): void => {
       </v-card-actions>
     </div>
 
-    <v-avatar
-      class="ma-2"
-      size="125"
-      rounded="lg"
-    >
-      <v-img :src="'/products/' + product.slug + '-' + product.banner" cover></v-img>
-    </v-avatar>
+
+    <router-link :to="{ name: 'Product', params: { slug: product.slug } }">
+      <v-avatar
+        v-ripple
+        class="ma-2 cursor-pointer"
+        size="125"
+        rounded="lg"
+      >
+        <v-img :src="'/products/' + product.slug + '-' + product.banner" cover></v-img>
+      </v-avatar>
+    </router-link>
   </div>
 </template>

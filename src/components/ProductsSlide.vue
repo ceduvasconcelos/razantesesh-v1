@@ -51,6 +51,7 @@ const modules = ref([
         <template v-slot:append>
           <v-btn
             :to="{ name: 'Products' }"
+            density="comfortable"
             variant="plain"
             rounded="lg"
           >
