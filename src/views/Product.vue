@@ -6,7 +6,8 @@ import Variant from '@/models/Variant'
 import formatMoney from '@/utils/formatMoney'
 import groupBy from '@/utils/groupBy'
 import ProductCarousel from '@/components/ProductCarousel.vue'
-import ProductsSlide from '@/components/ProductsSlide.vue'
+import ProductCard from '@/components/ProductCard.vue'
+import SubSectionTitle from '@/components/SubSectionTitle.vue'
 import BuyButton from '@/components/BuyButton.vue'
 
 const props = defineProps({
@@ -111,8 +112,12 @@ const availableVariant = (variants: any[], feature_index: number) => {
                       variant: availableVariant(variants || [], feature_index).availableVariant.id
                     }
                   }"
-                  :variant="option === selectedVariant.options[feature_index] ? 'flat' : 'outlined'"
-                  :class="{ 'option-disabled': availableVariant(variants || [], feature_index).requiresChanges }"
+                  :border="false"
+                  variant="outlined"
+                  :class="{
+                    'option-disabled': availableVariant(variants || [], feature_index).requiresChanges,
+                    'option-selected': option === selectedVariant.options[feature_index]
+                  }"
                   class="text-overline"
                   label
                 >
@@ -162,20 +167,39 @@ const availableVariant = (variants: any[], feature_index: number) => {
     </v-row>
 
     <v-row>
-      <v-col cols="12">
-        <products-slide @on-buying="appStore.addToCart"></products-slide>
+      <v-col cols="12" class="mb-2">
+        <sub-section-title title="Talvez você goste"></sub-section-title>
+      </v-col>
+    </v-row>
+
+    <v-row dense>
+      <v-col
+        v-for="product in Product.all().slice(0, 4)"
+        :key="product.id"
+        cols="6"
+        sm="4"
+        md="3"
+      >
+        <product-card
+          :product="product"
+          @on-buying="appStore.addToCart(product.id, product.variants[0].id, selectedQuantity)"
+        ></product-card>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <style scoped>
-.option-disabled {
-  border-style: dashed !important;
+.v-chip {
+  border: thin solid gray;
+  transition: border .25s ease;
 }
 
-:deep(.swiper-slide) {
-  display: inline !important;
-  box-sizing: border-box !important;
+.option-selected {
+  border: 2px solid black;
+}
+
+.option-disabled {
+  border-style: dashed;
 }
 </style>

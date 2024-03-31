@@ -9,7 +9,7 @@
             "thumb-1.jpeg",
             "thumb-2.jpeg"
         ],
-        "overllapingBanner": true,
+        "has_overlap_banner": true,
         "tags": [],
         "features": [
             "Cor",
@@ -91,7 +91,7 @@
             "thumb-1.jpeg",
             "thumb-2.jpeg"
         ],
-        "overllapingBanner": true,
+        "has_overlap_banner": true,
         "tags": [],
         "features": [],
         "variants": [
@@ -113,7 +113,7 @@
             "thumb-1.jpeg",
             "thumb-2.jpeg"
         ],
-        "overllapingBanner": true,
+        "has_overlap_banner": true,
         "tags": [],
         "features": [],
         "variants": [
@@ -135,7 +135,7 @@
             "thumb-1.jpeg",
             "thumb-2.jpeg"
         ],
-        "overllapingBanner": true,
+        "has_overlap_banner": true,
         "tags": [],
         "features": [],
         "variants": [
@@ -157,7 +157,7 @@
             "thumb-1.jpeg",
             "thumb-2.jpeg"
         ],
-        "overllapingBanner": true,
+        "has_overlap_banner": true,
         "tags": [],
         "features": [],
         "variants": [
@@ -179,7 +179,7 @@
             "thumb-1.jpeg",
             "thumb-2.jpeg"
         ],
-        "overllapingBanner": true,
+        "has_overlap_banner": true,
         "tags": [],
         "features": [],
         "variants": [
@@ -201,7 +201,7 @@
             "thumb-1.jpeg",
             "thumb-2.jpeg"
         ],
-        "overllapingBanner": true,
+        "has_overlap_banner": true,
         "tags": [],
         "features": [],
         "variants": [
@@ -223,7 +223,7 @@
             "thumb-1.jpeg",
             "thumb-2.jpeg"
         ],
-        "overllapingBanner": true,
+        "has_overlap_banner": true,
         "tags": [],
         "features": [],
         "variants": [

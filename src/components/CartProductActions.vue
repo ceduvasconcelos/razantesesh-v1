@@ -28,14 +28,20 @@ const removeFromCart = (id: number): void => {
 <template>
   <div class="d-flex flex-no-wrap justify-space-between align-center">
     <div>
-      <v-card-title class="text-subtitle-1 font-weight-regular text-md-h6 text-wrap">{{ product.title }}</v-card-title>
+      <v-card-title class="text-subtitle-1 font-weight-regular text-md-h6 text-wrap">
+        {{ product.title }}
+      </v-card-title>
 
-      <v-card-text class="d-flex flex-column mt-n2 mb-n4">
+      <v-card-text class="mt-n2 mb-n5">
         <template v-if="product.discount">
-          <span class="text-caption text-decoration-line-through">{{ formatMoney(product.price) }}</span>
+          <span class="text-caption text-decoration-line-through">
+            {{ formatMoney(product.price) }}
+          </span>
 
           <div class="d-flex align-baseline">
-            <span class="text-subtitle-1 font-weight-medium">{{ formatMoney(product.price) }}</span>
+            <span class="text-subtitle-1">
+              {{ formatMoney(product.price) }}
+            </span>
 
             <div class="text-caption text-green-darken-1 ms-2">
               {{ product.discount }}% OFF
@@ -44,7 +50,9 @@ const removeFromCart = (id: number): void => {
         </template>
 
         <template v-else>
-          <span class="text-subtitle-1 font-weight-medium ">{{ formatMoney(product.price) }}</span>
+          <span class="text-subtitle-1">
+            {{ formatMoney(product.price) }}
+          </span>
         </template>
 
         <template v-if="(product.hasFeatures())">
@@ -79,6 +87,7 @@ const removeFromCart = (id: number): void => {
           :loading="loadingRemoveButton"
           icon="mdi-trash-can-outline"
           size="small"
+          density="comfortable"
           class="ms-4"
           @click="removeFromCart(product.cart_id)"
         ></v-btn>

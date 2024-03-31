@@ -18,7 +18,7 @@ export default class CartProduct extends Product {
       product.description,
       product.best_seller,
       product.images,
-      product.overllapingBanner,
+      product.has_overlap_banner,
       product.tags,
       product.variants,
       product.features,

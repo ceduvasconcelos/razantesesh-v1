@@ -35,16 +35,15 @@ const appStore = useAppStore()
         cols="6"
         sm="4"
         md="3"
-        class="mb-4"
       >
         <product-card
           :product="product"
-          @onBuying="appStore.addToCart"
+          @on-buying="appStore.addToCart"
         ></product-card>
       </v-col>
     </v-row>
 
-    <v-row justify="center" class="my-1" dense>
+    <v-row justify="center" class="mt-8">
       <v-col cols="12" md="6">
         <v-btn
           :to="{ name: 'Products' }"

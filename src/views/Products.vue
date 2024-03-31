@@ -56,7 +56,6 @@ const sort = (type: any) => {
         cols="6"
         sm="4"
         md="3"
-        class="mb-4"
       >
         <product-card
           :product="product"

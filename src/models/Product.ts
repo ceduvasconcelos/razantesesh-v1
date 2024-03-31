@@ -9,7 +9,7 @@ export default class Product {
     public description: string,
     public best_seller: boolean,
     public images: any[],
-    public overllapingBanner: boolean,
+    public has_overlap_banner: boolean,
     public tags: any[],
     public _variants: any[],
     public features: any[],
@@ -20,7 +20,7 @@ export default class Product {
     this.description = description
     this.best_seller = best_seller
     this.images = images
-    this.overllapingBanner = overllapingBanner
+    this.has_overlap_banner = has_overlap_banner
     this.tags = tags
     this._variants = _variants
     this.features = features
@@ -42,7 +42,7 @@ export default class Product {
     return this.images[0]
   }
 
-  public get hover_banner(): string {
+  public get overlap_banner(): string {
     return this.images[1]
   }
 
@@ -83,7 +83,7 @@ export default class Product {
           product.description,
           product.best_seller,
           product.images,
-          product.overllapingBanner,
+          product.has_overlap_banner,
           product.tags,
           product.variants,
           product.features,
