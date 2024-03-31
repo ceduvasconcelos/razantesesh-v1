@@ -20,7 +20,7 @@ export default class CartProduct extends Product {
       product.images,
       product.has_overlap_banner,
       product.tags,
-      product.variants,
+      product._variants,
       product.features,
     )
 
@@ -44,6 +44,6 @@ export default class CartProduct extends Product {
   }
 
   public get priceWithoutDiscount(): number {
-    return this.cart_variant.price + ((this.cart_variant.price * this.cart_variant.discount) / 100)
+    return this.cart_variant.priceWithoutDiscount
   }
 }

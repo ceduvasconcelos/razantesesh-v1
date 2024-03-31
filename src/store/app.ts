@@ -25,6 +25,14 @@ export const useAppStore = defineStore('app', () => {
     () => cartProducts.value.reduce((total, product) => total + (product.price * product.cart_quantity), 0)
   )
 
+  const cartDiscount: ComputedRef<number> = computed(
+    () => cartProducts.value.reduce((total, product) => total + (product.discount * product.cart_quantity), 0)
+  )
+
+  const cartPriceWithoutDiscount: ComputedRef<number> = computed(
+    () => cartProducts.value.reduce((total, product) => total + (product.priceWithoutDiscount * product.cart_quantity), 0)
+  )
+
   const cartQuantity: ComputedRef<number> = computed(
     () => cartProducts.value.reduce((quantity, product) => quantity + product.cart_quantity, 0)
   )
@@ -96,6 +104,8 @@ export const useAppStore = defineStore('app', () => {
     cart,
     cartProducts,
     cartPrice,
+    cartDiscount,
+    cartPriceWithoutDiscount,
     cartQuantity,
     showPurchaseModal,
     addToCart,

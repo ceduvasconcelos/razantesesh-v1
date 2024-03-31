@@ -13,6 +13,8 @@ const appStore = useAppStore()
         <cart-summary
           :quantity="appStore.cartQuantity"
           :total="appStore.cartPrice"
+          :total-withou-discount="appStore.cartPriceWithoutDiscount"
+          :total-discount="appStore.cartDiscount"
           @onConfirm="appStore.confirmPurchase"
         ></cart-summary>
       </v-col>
@@ -37,9 +39,13 @@ const appStore = useAppStore()
           class="d-flex flex-column align-center justify-center flex-wrap text-center mx-auto py-16 px-2"
           border
         >
-          <p class="font-weight-medium">Seu carrinho está vazio.</p>
+          <p class="font-weight-medium">
+            Seu carrinho está vazio.
+          </p>
 
-          <p class="font-weight-light text-caption">Adicione produtos para continuar suas compras!</p>
+          <p class="font-weight-light text-caption">
+            Adicione produtos para continuar suas compras!
+          </p>
 
           <v-btn
             class="mt-4"

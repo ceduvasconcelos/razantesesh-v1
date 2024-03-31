@@ -35,7 +35,7 @@ const removeFromCart = (id: number): void => {
       <v-card-text class="mt-n2 mb-n5">
         <template v-if="product.discount">
           <span class="text-caption text-decoration-line-through">
-            {{ formatMoney(product.price) }}
+            {{ formatMoney(product.priceWithoutDiscount) }}
           </span>
 
           <div class="d-flex align-baseline">
@@ -95,7 +95,6 @@ const removeFromCart = (id: number): void => {
         ></v-btn>
       </v-card-actions>
     </div>
-
 
     <router-link :to="{
       name: 'Product',

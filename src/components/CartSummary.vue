@@ -10,6 +10,14 @@ defineProps({
   total: {
     type: Number,
     required: true
+  },
+  totalWithouDiscount: {
+    type: Number,
+    required: true
+  },
+  totalDiscount: {
+    type: Number,
+    required: true
   }
 })
 
@@ -36,11 +44,31 @@ const confirm = (): void => {
 
       <v-divider></v-divider>
 
-      <div class="pa-4">
+      <div class="d-flex flex-column px-4 pt-4 ga-3">
         <div class="d-flex justify-space-between">
-          <span class="font-weight-medium">Total ({{ quantity }} {{ quantity > 1 ? 'itens' : 'item' }})</span>
+          Produtos ({{ quantity }} {{ quantity > 1 ? 'itens' : 'item' }})
 
-          <span class="font-weight-medium">{{ formatMoney(total) }}</span>
+          <span>
+            {{ formatMoney(totalWithouDiscount) }}
+          </span>
+        </div>
+
+        <div v-if="totalDiscount" class="d-flex justify-space-between">
+          Descontos
+
+          <span class="text-green">
+            - {{ formatMoney(totalDiscount) }}
+          </span>
+        </div>
+
+        <v-divider></v-divider>
+
+        <div class="d-flex justify-space-between font-weight-medium">
+          Total
+
+          <span>
+            {{ formatMoney(total) }}
+          </span>
         </div>
       </div>
 
