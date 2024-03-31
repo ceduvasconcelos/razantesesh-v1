@@ -51,7 +51,7 @@ export const useAppStore = defineStore('app', () => {
     }
 
     cart.value.push({
-      id: cart.value.length + 1,
+      id: (cart.value.slice().sort((a, b) => b.id - a.id)[0]?.id || 0) + 1,
       product_id,
       variant_id,
       quantity
