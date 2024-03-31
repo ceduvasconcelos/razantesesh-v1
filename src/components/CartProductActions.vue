@@ -85,9 +85,11 @@ const removeFromCart = (id: number): void => {
 
         <v-btn
           :loading="loadingRemoveButton"
+          :ripple="false"
           icon="mdi-trash-can-outline"
-          size="small"
+          variant="plain"
           density="comfortable"
+          size="small"
           class="ms-4"
           @click="removeFromCart(product.cart_id)"
         ></v-btn>
@@ -95,7 +97,11 @@ const removeFromCart = (id: number): void => {
     </div>
 
 
-    <router-link :to="{ name: 'Product', params: { slug: product.slug } }">
+    <router-link :to="{
+      name: 'Product',
+      params: { slug: product.slug },
+      query: { variant: product.hasFeatures() ? product.cart_variant.id : undefined }
+    }">
       <v-avatar
         v-ripple
         class="ma-2 cursor-pointer"

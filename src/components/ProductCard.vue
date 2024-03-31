@@ -49,21 +49,23 @@ onMounted(() => {
       ></v-img>
     </div>
 
-    <v-card-title class="text-subtitle-2 font-weight-medium">
+    <v-card-title class="text-body-2 mt-n1">
       {{ product.title }}
     </v-card-title>
 
-    <v-card-text class="d-flex flex-column text-no-wrap mt-n3">
-      <span class="text-caption text-decoration-line-through" style="height: 1rem;">
+    <v-card-text class="d-flex flex-column mt-n4">
+      <span class="text-body-2 text-decoration-line-through mt-1" style="height: 1rem;">
         {{ product.discount ? formatMoney(product.priceWithoutDiscount) : '' }}
       </span>
 
-      <div class="d-flex align-baseline">
-        <span class="text-subtitle-1 font-weight-medium">{{ formatMoney(product.price) }}</span>
+      <div class="d-flex justify-space-between align-baseline">
+        <span class="text-subtitle-1">
+          {{ formatMoney(product.price) }}
+        </span>
 
-        <div v-if="product.discount" class="text-caption text-green-darken-1 ms-auto">
+        <span v-if="product.discount" class="text-body-2 text-green">
           {{ product.discount }}% OFF
-        </div>
+        </span>
       </div>
     </v-card-text>
 

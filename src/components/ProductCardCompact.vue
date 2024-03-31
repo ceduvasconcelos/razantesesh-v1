@@ -61,16 +61,18 @@ onMounted(() => {
       ></v-badge>
     </div>
 
-    <v-card-text class="text-subtitle-1 text-black pa-2">
+    <v-card-title class="text-body-2 text-black mt-n1 pa-2">
       {{ product.title }}
+    </v-card-title>
 
-      <div class="mt-1">
-        <span v-if="product.discount" class="text-decoration-line-through text-caption me-2">
-          {{ formatMoney(product.priceWithoutDiscount) }}
-        </span>
+    <v-card-text class="text-black mt-n5 pa-2">
+      <span v-if="product.discount" class="text-decoration-line-through text-body-2 me-2">
+        {{ formatMoney(product.priceWithoutDiscount) }}
+      </span>
 
+      <span class="text-subtitle-1">
         {{ formatMoney(product.price) }}
-      </div>
+      </span>
     </v-card-text>
   </v-card>
 </template>

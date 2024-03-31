@@ -69,15 +69,27 @@ export const useAppStore = defineStore('app', () => {
     text += 'Os produtos escolhidos são:%0A%0A'
 
     cartProducts.value.forEach(product => {
-      text += `_${product.cart_quantity}x ${product.title} (${formatMoney(product.price)})`
+      text += `${product.cart_quantity}x ${product.title} (${formatMoney(product.price)})`
       text += ` - `
-      text += `${formatMoney(product.price * product.cart_quantity)}_%0A%0A`
-    });
+      text += `${formatMoney(product.price * product.cart_quantity)}`
+
+      if (product.hasFeatures()) {
+        product.features.forEach((feature, index) => {
+          text += `%0A`
+          text += `- ${feature}: ${product.cart_variant.options[index]}`
+        })
+      }
+
+      text += `%0A%0A`
+    })
 
     text += `Total do pedido (${cartQuantity.value} ${cartQuantity.value > 1 ? 'itens' : 'item'}): `
     text += formatMoney(cartPrice.value)
 
-    window.open(`https://api.whatsapp.com/send?phone=5585981887454&text=${text}`);
+    window.open(
+      "https://api.whatsapp.com/send?phone=" + import.meta.env.VITE_CLIENT_WHATSAPP
+      + "&text=" + text
+    )
   }
 
   return {
