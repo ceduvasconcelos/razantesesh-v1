@@ -26,7 +26,7 @@ export const useAppStore = defineStore('app', () => {
   )
 
   const cartDiscount: ComputedRef<number> = computed(
-    () => cartProducts.value.reduce((total, product) => total + (product.discount * product.cart_quantity), 0)
+    () => cartProducts.value.reduce((total, product) => total + ((product.priceWithoutDiscount - product.price) * product.cart_quantity), 0)
   )
 
   const cartPriceWithoutDiscount: ComputedRef<number> = computed(
