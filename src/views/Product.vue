@@ -136,7 +136,7 @@ const availableVariant = (variants: any[], feature_index: number) => {
             </div>
           </v-col>
 
-          <v-col cols="6" sm="4" md="5" lg="4" xl="3" xxl="2">
+          <v-col cols="12" sm="4" md="5" lg="4" xl="3" xxl="2">
             <div class="text-overline">
               Quantidade
             </div>
