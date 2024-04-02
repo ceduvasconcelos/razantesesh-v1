@@ -69,7 +69,7 @@ export const useAppStore = defineStore('app', () => {
   function removeFromCart(cart_id: number): void {
     const cartIndex = cart.value.findIndex(cart => cart.id === cart_id)
 
-    cart.value.splice(cartIndex, 1);
+    cart.value.splice(cartIndex, 1)
   }
 
   function confirmPurchase(): void {

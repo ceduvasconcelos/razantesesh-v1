@@ -67,6 +67,22 @@ export default class Product {
     return this.features.length ? true : false
   }
 
+  public related(limit: number = 4): Product[] {
+    let products = Product.all()
+
+    products = products.filter(product => product.id !== this.id);
+
+    let relatedProducts = products.filter(product =>
+      product.tags.some(tag => this.tags.includes(tag))
+    )
+
+    while (relatedProducts.length < limit) {
+      relatedProducts = relatedProducts.concat(products)
+    }
+
+    return relatedProducts.slice(0, limit)
+  }
+
   public static bestSellers(): Product[] {
     return Product.all().filter((product) => product.best_seller)
   }
